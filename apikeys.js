@@ -1,11 +1,9 @@
-// Note to self: localStoage is persistent, sessionStorage is until all tabs are closed
-// If there is no API key in the computer localStorage
+// localStroage is persistent, sessionStorage stays until all tabs are closed
 if (localStorage.getItem('apiNinjaKey') === null) {
-  // Set a localStorage item to user input (does not set any const variables)
+  // Set a localStorage item to user input, done before firebase.js runs
   localStorage.setItem('apiNinjaKey', window.prompt("Enter API key for API Ninja"));
 }
 
-// If there is no firebaseConfig in computer localStorage
 if (localStorage.getItem('firebaseConfig') === null) {
   // Make an empty firebaseConfigObject with empty strings 
   let firebaseConfigObject = {

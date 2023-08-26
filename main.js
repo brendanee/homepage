@@ -1,12 +1,11 @@
 // apiKey from localStorage
 import { apiNinjaKey } from "./apikeys.js";
 import { read, write } from "./firebase.js";
-/*import ColorThief from "https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.4.0/color-thief.min.js";*/
 
-  await fetch("https://api.api-ninjas.com/v1/quotes?catagory=love", { headers: { "X-Api-Key": apiNinjaKey } })
-    .then((response) => response.json())
-    .then((data) => document.querySelector('body > blockquote').innerHTML = `${data[0].quote}&nbsp&nbsp&nbsp—&nbsp<i>${data[0].author}</i>`)
-    .catch((error) => console.error(`404: Cannot fetch quote due to ${error}`))
+await fetch("https://api.api-ninjas.com/v1/quotes?catagory=love", { headers: { "X-Api-Key": apiNinjaKey } })
+  .then((response) => response.json())
+  .then((data) => document.querySelector('body > blockquote').innerHTML = `${data[0].quote}&nbsp&nbsp&nbsp—&nbsp<i>${data[0].author}</i>`)
+  .catch((error) => console.error(`404: Cannot fetch quote due to ${error}`))
 
 let search = [];
 await fetch("https://raw.githubusercontent.com/brendanee/Taskbar/main/result.json")
@@ -27,7 +26,6 @@ if (currentHour >= 4 && currentHour <= 9) {
 }
 
 document.querySelector('body').style.backgroundImage = `url("https://source.unsplash.com/random/1920x1080?${vibe}")`;
-console.log(vibe);
 
 // Function called when something's typed in the search box. Called each key stroke
 // Needs global scope because code compares it against previous version before overwriting
@@ -133,7 +131,7 @@ function cycleClasses(index) {
   classesValues[index] = newClass;
 }
 
-// Called on right-click of the classes button. Simply resets classes button ro none.
+// Called on right-click of the classes button. Resets classes button to none.
 function resetClasses(index) {
   document.querySelector(`#classes div:nth-child(${index + 1})`).className = "none";
   classesValues[index] = "none";
@@ -176,11 +174,10 @@ function updateTodo() {
   write('todo', 'main', {data: todoListData, private: todoListPrivate});
 }
 
-// Makes function global to window, needed bc modules aren't. Not the best practice.
+// Makes function global to window, needed bc modules aren't. Not the best practice, but needed as they're referenced from HTMl. Avoidable use eventListener
 window.cycleClasses = cycleClasses;
 window.resetClasses = resetClasses;
 window.refreshSearch = refreshSearch;
 window.updateClasses = updateClasses;
 window.addToTodo = addToTodo;
 window.updateTodo = updateTodo;
-window.deleteTodo = deleteTodo;
