@@ -1,5 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Anek+Latin");
 
+html {
+  /* Color defs*/
+  --orange: #ffccb5;
+  --pink: #edb1ff;
+  --blue: #b1c2ff;
+  --magenta: #8f0bc2;
+  --dark-blue: #1a095e;
+  --off-purple: #25172b;
+  --off-black: #131314;
+  --b-sunset: linear-gradient(135deg, rgb(204,129,8) 0%, var(--magenta) 100%);
+}
+
 /* Three divs after body are the flex elements. Each handles its own styling, and the blockquote is out of flow*/
 body {
   display: flex;
@@ -65,7 +77,7 @@ input[type="text"] {
     width: 100%;
     font-size: 20px;
     border-style: none none solid none;
-    border-image: linear-gradient(135deg, rgba(204, 129, 8, 1) 0%, rgba(143, 11, 194, 1) 100%) 5;
+    border-image: var(--b-sunset);
     color: white;
     background-color: transparent;
     text-align: center;
@@ -84,7 +96,7 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked {
-  accent-color: rgb(143, 11, 194);
+  accent-color: var(--magenta);
 }
 
 #todo-input {
@@ -109,8 +121,8 @@ div:has(> input) {
 li:has(input:checked) {
   backdrop-filter: brightness(110%) contrast(150%) !important;
   -webkit-backdrop-filter: brightness(110%) contrast(150%) !important;
-  outline: 3px solid rgb(143, 11, 194);
-  box-shadow: inset rgb(143, 11, 194) 0 0 15px, rgb(143, 11, 194) 0 0 30px !important;
+  outline: 3px solid var(--magenta);
+  box-shadow: inset var(--magenta) 0 0 15px, var(--magenta) 0 0 30px !important;
 }
 
 /* Each individual results styling */
@@ -121,7 +133,7 @@ ul li {
   border-radius: 15px;
   backdrop-filter: brightness(90%) contrast(125%);
   -webkit-backdrop-filter: brightness(90%) contrast(125%);
-  color: rgba(204, 129, 8, 1);
+  color: var(--blue);
   text-align: center;
   list-style-type: none;
   box-shadow: 0 0 4px #00000080;
