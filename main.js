@@ -158,11 +158,11 @@ function addToTodo(event) {
   }
 }
 
-function addTodoElement(content, isPrivate, backwardsIndex) {
+function addTodoElement(content, isPrivate) {
   let element = document.createElement("li");
   element.spellcheck = false;
   element.contentEditable = true;
-  element.innerHTML = `${content}<span contenteditable="false"><input type="checkbox" ${isPrivate ? 'checked' : ''}></span><img onclick="this.parentNode.remove();" src="./trash.svg" alt="">`;
+  element.innerHTML = `${content}<span contenteditable="false"><input type="checkbox" ${isPrivate ? 'checked' : ''}></span><img onclick="this.parentNode.remove();" src="./assets/trash.svg" alt="">`;
   document.getElementById("todo").prepend(element);
 }
 

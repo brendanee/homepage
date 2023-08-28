@@ -195,7 +195,7 @@ ul li {
   }
 }
 
-img[src="./cloud.svg"] {
+img[src="./assets/cloud.svg"] {
   display: block;
   width: 45px;
   margin-top: 2px;
