@@ -9,7 +9,7 @@ html {
   --dark-blue: #1a095e;
   --off-purple: #25172b;
   --off-black: #131314;
-  --b-sunset: linear-gradient(135deg, rgb(204,129,8) 0%, var(--magenta) 100%);
+  --b-sunset: linear-gradient(135deg, rgb(204,129,8) 0%, var(--magenta) 100%) 2;
 }
 
 /* Three divs after body are the flex elements. Each handles its own styling, and the blockquote is out of flow*/
@@ -28,6 +28,8 @@ body {
   background-size: cover;
   text-shadow: 0 0 0.3em black, 0 0 0.3em black;
   /* Don't use background-position bc it'll mess everything up ig */
+  background-color: var(--dark-blue); /*move this to the correct place TODO*/
+  overflow-x: hidden; /*this too TODO*/
 }
 
 body::after {
