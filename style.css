@@ -15,21 +15,18 @@ html {
 /* Three divs after body are the flex elements. Each handles its own styling, and the blockquote is out of flow*/
 body {
   display: flex;
-  margin: 0;
   flex-wrap: wrap;
-/*TODO FIX this*/
+  margin: 0;
   width: 100vw;
   height: 100vh;
-  margin: 0;
   font-size: 18px;
   font-family: "Anek-Latin", sans-serif;
   justify-content: center;
   color: white;
+  background-color: var(--dark-blue);
   background-size: cover;
   text-shadow: 0 0 0.3em black, 0 0 0.3em black;
   /* Don't use background-position bc it'll mess everything up ig */
-  background-color: var(--dark-blue); /*move this to the correct place TODO*/
-  overflow-x: hidden; /*this too TODO*/
 }
 
 body::after {
@@ -48,16 +45,19 @@ body > * {
 
 /* Large columns of content */
 body > div {
-  flex-basis: 350px;
-  flex-grow: 1;
-  flex-shrink: 0;
+  flex: 1 0 350px;
+  display: flex; /* Applies to children */
+  flex-direction: column;
+  max-height: calc(100% - 10px);
   padding-top: 10px;
 }
 
 /*-----------------------------------------------------*/
 /* First column, the search wrapper actually forms the box for search */
 .wrapper {
+  flex: 0 1 auto;
   padding: 20px;
+  overflow-y: auto;
   border-radius: 15px;
   background-color: #00000020;
   backdrop-filter: blur(4px) brightness(150%);
@@ -169,19 +169,19 @@ ul li {
   }
 
   .none {
-    background-color: #00000020;
+    background-color: #00000040;
   }
   
   .homework {
-    background-color: #3f991e80;
+    background-color: #3f991e;
   }
   
   .study {
-    background-color: #1a095e80;
+    background-color: var(--magenta);
   }
   
   .test {
-    background-color: #b02b0280;
+    background-color: #b02b02;
   }
 }
 
@@ -209,6 +209,13 @@ body > blockquote {
   position: fixed;
   bottom: 0;
   text-align: center;
+}
+
+#todo {
+  flex: 0 1 auto;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 #todo li {

@@ -8,46 +8,48 @@
   <link href="./style.css" rel="stylesheet">
 </head>
 <body>
-    <div>
-      <div class="wrapper">
-        <div>
-          <input id="search" autocomplete="off" type="text" placeholder="What's on your mind?" onkeyup="refreshSearch()">
-          <input type="checkbox" name="Private" id="todo-private">
-        </div>
-        <!-- #results is auto-populated from JS -->
-        <ul id="search-results"></ul>
+  <div>
+    <div class="wrapper">
+      <div>
+        <input id="search" autocomplete="off" type="text" placeholder="What's on your mind?" onkeyup="refreshSearch()">
+        <input type="checkbox" name="Private" id="todo-private">
       </div>
+      <!-- #results is auto-populated from JS -->
+      <ul id="search-results"></ul>
+    </div>
+  </div>
+  <div>
+    <!-- JS will populate #classes div with classes when Firestore connects -->
+    <div id="classes">
+      <div onclick="cycleClasses(0);" oncontextmenu="resetClasses(0); return false;">Western Civ.</div>
+      <div onclick="cycleClasses(1);" oncontextmenu="resetClasses(1); return false;">Japanese 300</div>
+      <div onclick="cycleClasses(2);" oncontextmenu="resetClasses(2); return false;">Physics</div>
+      <div onclick="cycleClasses(3);" oncontextmenu="resetClasses(3); return false;">English</div>
+      <div onclick="cycleClasses(4);" oncontextmenu="resetClasses(4); return false;">Ceramics</div>
+      <div onclick="cycleClasses(5);" oncontextmenu="resetClasses(5); return false;">Precalc</div>
+      <div onclick="cycleClasses(6);" oncontextmenu="resetClasses(6); return false;">.</div>
+      <div onclick="cycleClasses(7);" oncontextmenu="resetClasses(7); return false;">Extracur.</div>
+      <div onclick="cycleClasses(8);" oncontextmenu="resetClasses(8); return false;">Advisory</div>
+      <div onclick="cycleClasses(9);" oncontextmenu="resetClasses(9); return false;">Sports</div>
+      <img onclick="updateClasses()" id="classes-refresh" src="./assets/cloud.svg"
+        alt="A blue cloud drawing with white arrows indicating refresh">
     </div>
     <div>
-      <!-- JS will populate #classes div with classes when Firestore connects -->
-      <div id="classes">
-        <div onclick="cycleClasses(0);" oncontextmenu="resetClasses(0); return false;">Western Civ.</div>
-        <div onclick="cycleClasses(1);" oncontextmenu="resetClasses(1); return false;">Japanese 300</div>
-        <div onclick="cycleClasses(2);" oncontextmenu="resetClasses(2); return false;">Physics</div>
-        <div onclick="cycleClasses(3);" oncontextmenu="resetClasses(3); return false;">English</div>
-        <div onclick="cycleClasses(4);" oncontextmenu="resetClasses(4); return false;">Ceramics</div>
-        <div onclick="cycleClasses(5);" oncontextmenu="resetClasses(5); return false;">Precalc</div>
-        <div onclick="cycleClasses(6);" oncontextmenu="resetClasses(6); return false;">.</div>
-        <div onclick="cycleClasses(7);" oncontextmenu="resetClasses(7); return false;">Extracur.</div>
-        <div onclick="cycleClasses(8);" oncontextmenu="resetClasses(8); return false;">Advisory</div>
-        <div onclick="cycleClasses(9);" oncontextmenu="resetClasses(9); return false;">Sports</div>
-        <img onclick="updateClasses()" id="classes-refresh" src="./assets/cloud.svg" alt="A blue cloud drawing with white arrows indicating refresh">
-      </div>
-      <ul class="wrapper" id="todo">
-        <div>
-          <input id="todo-input" autocomplete="off" type="text" placeholder="What should you do..." onkeyup="addToTodo(event)">
-          <input type="checkbox" name="Private" id="todo-private">
-          <img onclick="updateTodo()" id="todo" src="./assets/cloud.svg" alt="A blue cloud drawing with white arrows indicating refresh">
-        </div>
-      </ul>
+      <input id="todo-input" autocomplete="off" type="text" placeholder="What should you do..."
+        onkeyup="addToTodo(event)">
+      <input type="checkbox" name="Private" id="todo-private">
+      <img onclick="updateTodo()" src="./assets/cloud.svg"
+        alt="A blue cloud drawing with white arrows indicating refresh">
     </div>
-    <div>
-      <div id="times">
-        <div>Class ends in X minutes, at ##:##</div>
-        <div>Class starts in X minutes, at ##:##</div>
-      </div>
+    <ul class="wrapper" id="todo"></ul>
+  </div>
+  <div>
+    <div id="times">
+      <div>Class ends in X minutes, at ##:##</div>
+      <div>Class starts in X minutes, at ##:##</div>
     </div>
-    <blockquote contenteditable><i></i></blockquote>
+  </div>
+  <blockquote contenteditable><i></i></blockquote>
   <script type="module" src="./main.js"></script>
 </body>
 </html>

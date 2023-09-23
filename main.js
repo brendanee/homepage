@@ -170,7 +170,7 @@ function updateTodo() {
   todoListData = [];
   document.querySelectorAll('ul li').forEach((element) => (todoListData.unshift(element.innerText)))
   todoListPrivate = [];
-  document.querySelectorAll('ul li input').forEach((element) => (todoListPrivate.unshift(element.checked)))
+  document.querySelectorAll('li input').forEach((element) => (todoListPrivate.unshift(element.checked)))
   write('todo', 'main', {data: todoListData, private: todoListPrivate});
 }
 
