@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Anek+Latin");
 
+/* INITIALIZATION */
 html {
-  /* Color defs*/
   --orange: #ffccb5;
   --pink: #edb1ff;
   --blue: #b1c2ff;
@@ -12,50 +12,36 @@ html {
   --b-sunset: linear-gradient(135deg, rgb(204,129,8) 0%, var(--magenta) 100%) 2;
 }
 
-/* Three divs after body are the flex elements. Each handles its own styling, and the blockquote is out of flow*/
+/* Blockquote is position: fixed out of flow*/
 body {
   display: flex;
   flex-wrap: wrap;
   margin: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   font-size: 18px;
   font-family: "Anek-Latin", sans-serif;
   justify-content: center;
   color: white;
-  background-color: var(--dark-blue);
-  background-size: cover;
+  background: var(--dark-blue);
   text-shadow: 0 0 0.3em black, 0 0 0.3em black;
-  /* Don't use background-position bc it'll mess everything up ig */
 }
 
-body::after {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: brightness(70%) contrast(120%);
-  -webkit-backdrop-filter: brightness(70%) contrast(120%);
+#random-image {
+  position: fixed;
+  padding: 0;
+  z-index: 0;
 }
 
-body > * {
-  z-index: 1;
-}
-
-/* Large columns of content */
 body > div {
-  flex: 1 0 350px;
-  display: flex; /* Applies to children */
-  flex-direction: column;
-  max-height: calc(100% - 10px);
+  flex: 1 1 350px;
+ /* display: flex; /* Applies to element's children */
+  max-height: calc(100% - 10px); /* Account for padding */
   padding-top: 10px;
 }
 
-/*-----------------------------------------------------*/
-/* First column, the search wrapper actually forms the box for search */
+/* Generic element*/
 .wrapper {
-  flex: 0 1 auto;
   padding: 20px;
   overflow-y: auto;
   border-radius: 15px;
@@ -63,14 +49,17 @@ body > div {
   backdrop-filter: blur(4px) brightness(150%);
   -webkit-backdrop-filter: blur(4px) brightness(150%);
   box-shadow: 0 0 10px #00000080;
+}
 
-  #search-results {
-    display: none;
-    max-height: 500px;
-    padding: 0;
-    border-radius: 5px;
-    overflow-y: auto;
-  }
+/*-----------------------------------------------------*/
+/* First column, the search wrapper actually forms the box for search */
+
+#search-results {
+  display: none;
+  max-height: 500px;
+  padding: 0;
+  border-radius: 5px;
+  overflow-y: auto;
 }
 
 input[type="text"] {
@@ -104,7 +93,7 @@ input[type="checkbox"]:checked {
 #todo-input {
   text-align: left;
 }
-
+/*
 div:has(> input) {
   width: 100%;
   display: flex;
@@ -114,7 +103,7 @@ div:has(> input) {
     margin: 3px;
   }
 }
-
+*/
 #todo li {
   display: flex;
   flex-grow: 0;

@@ -13,20 +13,6 @@ await fetch("https://raw.githubusercontent.com/brendanee/Taskbar/main/result.jso
   .then((data) => search = data)
   .catch((error) => console.error(`404: Cannot fetch search data due to ${error}`));
 
-let currentHour = new Date().getHours();
-let vibe = '';
-if (currentHour >= 4 && currentHour <= 9) {
-  vibe = "sunrise";
-} else if (currentHour >= 10 && currentHour <= 15) {
-  vibe = "day";
-} else if (currentHour >= 16 && currentHour <= 18) {
-  vibe = "sunset";
-} else if (currentHour >= 19 || currentHour <= 3) {
-  vibe = "night";
-}
-
-document.querySelector('body').style.backgroundImage = `url("https://source.unsplash.com/random/1920x1080?${vibe}")`;
-
 // Function called when something's typed in the search box. Called each key stroke
 // Needs global scope because code compares it against previous version before overwriting
 let matches = [];
@@ -153,16 +139,16 @@ for (let i = 0; i < todoListData.length; i++) {
 
 function addToTodo(event) {
   if (event.code === 'Enter') {
-    addTodoElement(document.getElementById('todo-input').value, document.getElementById('todo-private').checked, 1);
+    addTodoElement(document.getElementById('todo-input').value, document.getElementById('todo-important').checked, 1);
     document.getElementById('todo-input').value = '';
   }
 }
 
-function addTodoElement(content, isPrivate) {
+function addTodoElement(content, isImportant) {
   let element = document.createElement("li");
   element.spellcheck = false;
   element.contentEditable = true;
-  element.innerHTML = `${content}<span contenteditable="false"><input type="checkbox" ${isPrivate ? 'checked' : ''}></span><img onclick="this.parentNode.remove();" src="./assets/trash.svg" alt="">`;
+  element.innerHTML = `${content}<span contenteditable="false"><input type="checkbox" ${isImportant ? 'checked' : ''}></span><img onclick="this.parentNode.remove();" src="./assets/trash.svg" alt="">`;
   document.getElementById("todo").prepend(element);
 }
 
@@ -174,7 +160,7 @@ function updateTodo() {
   write('todo', 'main', {data: todoListData, private: todoListPrivate});
 }
 
-// Makes function global to window, needed bc modules aren't. Not the best practice, but needed as they're referenced from HTMl. Avoidable use eventListener
+// Makes function global to window, needed bc modules aren't. Not the best practice, but needed as they're referenced from HTMl. Avoidable using eventListener
 window.cycleClasses = cycleClasses;
 window.resetClasses = resetClasses;
 window.refreshSearch = refreshSearch;

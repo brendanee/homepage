@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 50 35" width="50px" height="35px" xmlns="http://www.w3.org/2000/svg">
+  <path d="M 34.168 17.5 C 34.168 22.563 30.063 26.668 25 26.668 C 19.938 26.668 15.833 22.563 15.833 17.5 C 15.833 12.438 19.938 8.333 25 8.333 C 30.063 8.333 34.168 12.438 34.168 17.5 Z M 25 30 C 36.785 30 50 17.5 50 17.5 C 50 17.5 36.785 5 25 5 C 13.215 5 0 17.5 0 17.5 C 0 17.5 13.215 30 25 30 Z" style="fill: rgb(143, 11, 194);">
+    <title>Outer Eye</title>
+  </path>
+  <ellipse style="fill: rgb(143, 11, 194);" cx="25" cy="17.5" rx="6.075" ry="6.075">
+    <title>Pupil</title>
+  </ellipse>
+</svg>

@@ -8,6 +8,7 @@
   <link href="./style.css" rel="stylesheet">
 </head>
 <body>
+  <img loading="lazy" id="random-image" alt="Randomly generated background-image">
   <div>
     <div class="wrapper">
       <div>
@@ -34,22 +35,39 @@
       <img onclick="updateClasses()" id="classes-refresh" src="./assets/cloud.svg"
         alt="A blue cloud drawing with white arrows indicating refresh">
     </div>
-    <div>
+    <div class="wrapper">
       <input id="todo-input" autocomplete="off" type="text" placeholder="What should you do..."
         onkeyup="addToTodo(event)">
-      <input type="checkbox" name="Private" id="todo-private">
-      <img onclick="updateTodo()" src="./assets/cloud.svg"
-        alt="A blue cloud drawing with white arrows indicating refresh">
+      <input type="checkbox" name="Important" id="todo-important">
+      <img onclick="updateTodo()" src="./assets/cloud.svg" alt="A blue cloud drawing with white arrows indicating refresh">
+      <ul id="todo"></ul>
     </div>
-    <ul class="wrapper" id="todo"></ul>
   </div>
   <div>
-    <div id="times">
+    <div class="wrapper" id="times">
       <div>Class ends in X minutes, at ##:##</div>
       <div>Class starts in X minutes, at ##:##</div>
     </div>
   </div>
-  <blockquote contenteditable><i></i></blockquote>
+  <blockquote><i></i></blockquote>
   <script type="module" src="./main.js"></script>
+  <script>
+    // Inline script for fast stuff as soon as HTML loads
+    let currentHour = new Date().getHours();
+    let vibe = '';
+    if (currentHour >= 4 && currentHour <= 9) {
+      vibe = "sunrise";
+    } else if (currentHour >= 10 && currentHour <= 15) {
+      vibe = "day";
+    } else if (currentHour >= 16 && currentHour <= 18) {
+      vibe = "sunset";
+    } else if (currentHour >= 19 || currentHour <= 3) {
+      vibe = "night";
+    }
+
+    let element = document.createElement('img');
+
+    document.getElementById('random-image').src = `https://wsrv.nl/?url=https://source.unsplash.com/random/${window.innerWidth}x${window.innerHeight}?${vibe}&max-age=1d&con=20&mod=0.7&random=${Math.floor(Math.random() * 6)}`;
+  </script>
 </body>
 </html>
