@@ -78,7 +78,7 @@ function refreshSearch() {
 // Add a result to #results, the results unordered list (called iteratively)
 function addResult(index) {
   let element = document.createElement("li");
-  element.innerHTML = "<a href=\"https://" + search[index].link + "\" target=\"_blank\">" + search[index].name + "</a> #" + search[index].tags.replaceAll(" ", " #");
+  element.innerHTML = `<a href="https://${search[index].link}" target="_blank">${search[index].name}</a><span> #${search[index].tags.replaceAll(" ", " #")}</span>`;
   document.getElementById("search-results").appendChild(element);
 }
 

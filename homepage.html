@@ -8,10 +8,10 @@
   <link href="./style.css" rel="stylesheet">
 </head>
 <body>
-  <img loading="lazy" id="random-image" alt="Randomly generated background-image">
+  <img loading="lazy" onload="this.style.opacity = 1; this.style.filter = 'blur(0)'" id="random-image" alt="Randomly generated background image">
   <div>
     <div class="wrapper">
-      <div>
+      <div class="input-wrapper">
         <input id="search" autocomplete="off" type="text" placeholder="What's on your mind?" onkeyup="refreshSearch()">
         <input type="checkbox" name="Private" id="todo-private">
       </div>
@@ -36,10 +36,11 @@
         alt="A blue cloud drawing with white arrows indicating refresh">
     </div>
     <div class="wrapper">
-      <input id="todo-input" autocomplete="off" type="text" placeholder="What should you do..."
-        onkeyup="addToTodo(event)">
-      <input type="checkbox" name="Important" id="todo-important">
-      <img onclick="updateTodo()" src="./assets/cloud.svg" alt="A blue cloud drawing with white arrows indicating refresh">
+      <div class="input-wrapper">
+        <input id="todo-input" autocomplete="off" type="text" placeholder="What should you do..." onkeyup="addToTodo(event)">
+        <input type="checkbox" name="Important" id="todo-important">
+        <img onclick="updateTodo()" src="./assets/cloud.svg" alt="A blue cloud drawing with white arrows indicating refresh">
+      </div>
       <ul id="todo"></ul>
     </div>
   </div>

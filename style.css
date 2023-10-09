@@ -12,9 +12,10 @@ html {
   --b-sunset: linear-gradient(135deg, rgb(204,129,8) 0%, var(--magenta) 100%) 2;
 }
 
-/* Blockquote is position: fixed out of flow*/
+/* Blockquote is position: fixed out of flow */
 body {
   display: flex;
+  gap: 5px;
   flex-wrap: wrap;
   margin: 0;
   width: 100%;
@@ -27,98 +28,38 @@ body {
   text-shadow: 0 0 0.3em black, 0 0 0.3em black;
 }
 
-#random-image {
-  position: fixed;
-  padding: 0;
-  z-index: 0;
-}
-
+/* GENERIC ELEMENT STYLING */
 body > div {
   flex: 1 1 350px;
- /* display: flex; /* Applies to element's children */
   max-height: calc(100% - 10px); /* Account for padding */
   padding-top: 10px;
 }
 
-/* Generic element*/
-.wrapper {
-  padding: 20px;
-  overflow-y: auto;
-  border-radius: 15px;
-  background-color: #00000020;
-  backdrop-filter: blur(4px) brightness(150%);
-  -webkit-backdrop-filter: blur(4px) brightness(150%);
-  box-shadow: 0 0 10px #00000080;
+body > blockquote {
+  font-size: 24px;
+  position: fixed;
+  bottom: 0;
+  text-align: center;
+  pointer-events: none;
 }
 
-/*-----------------------------------------------------*/
-/* First column, the search wrapper actually forms the box for search */
+*[contenteditable], #search:focus {
+  outline: none;
+}
 
-#search-results {
-  display: none;
-  max-height: 500px;
+a {
+  color: white;
+  text-decoration: none;
+}
+
+ul {
+  margin: 0;
   padding: 0;
-  border-radius: 5px;
-  overflow-y: auto;
-}
-
-input[type="text"] {
-    display: block;
-    /* Don't touch this */
-    width: 100%;
-    font-size: 20px;
-    border-style: none none solid none;
-    border-image: var(--b-sunset);
-    color: white;
-    background-color: transparent;
-    text-align: center;
-
-    &::placeholder {
-      opacity: 0.55;
-      color: white;
-    }
-
-}
-
-input[type="checkbox"] {
-  display: block;
-  width: 20px;
-  height: 20px;
-}
-
-input[type="checkbox"]:checked {
-  accent-color: var(--magenta);
-}
-
-#todo-input {
-  text-align: left;
-}
-/*
-div:has(> input) {
-  width: 100%;
-  display: flex;
-
-  align-items: end;
-  * {
-    margin: 3px;
-  }
-}
-*/
-#todo li {
-  display: flex;
-  flex-grow: 0;
-}
-
-li:has(input:checked) {
-  backdrop-filter: brightness(110%) contrast(150%) !important;
-  -webkit-backdrop-filter: brightness(110%) contrast(150%) !important;
-  outline: 3px solid var(--magenta);
-  box-shadow: inset var(--magenta) 0 0 15px, var(--magenta) 0 0 30px !important;
 }
 
 /* Each individual results styling */
 ul li {
-  margin: 10px 5px;
+  margin: 5px;
   padding: 5px;
   font-size: 18px;
   border-radius: 15px;
@@ -128,62 +69,35 @@ ul li {
   text-align: center;
   list-style-type: none;
   box-shadow: 0 0 4px #00000080;
-
-  a {
-    color: white;
-    text-decoration: none;
-  }
+  word-break: break-all;
 }
 
-/* Second column: Flex properties are for the little class buttons */
-#classes {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: center;
-
-  & > div {
-    flex-basis: 100px;
-    flex-grow: 0;
-    margin: 5px 5px;
-    padding: 5px 10px;
-    font-size: 15px;
-    border-radius: 10px;
-    backdrop-filter: blur(4px) brightness(150%);
-    -webkit-backdrop-filter: blur(4px) brightness(150%);
-    text-align: center;
-    user-select: none;
-    cursor: pointer;
-    box-shadow: 0 0 4px #00000080;
-  }
-
-  .none {
-    background-color: #00000040;
-  }
-  
-  .homework {
-    background-color: #3f991e;
-  }
-  
-  .study {
-    background-color: var(--magenta);
-  }
-  
-  .test {
-    background-color: #b02b02;
-  }
+/* Fancy sibling selector for search result hashtags*/
+ul li a ~ span {
+  color: var(--blue);
 }
 
-/* Placeholder */
-#times {
-  flex-basis: 300px;
-  flex-grow: 1;
+input[type="text"] {
+  display: block;
+  width: 100%;
+  font-size: 20px;
+  border-style: none none solid none;
+  border-image: var(--b-sunset);
+  color: white;
+  background-color: transparent;
+  text-align: center;
+}
 
-  div {
-    margin: 4px 0;
-    font-size: 18px;
-    text-align: center;
-  }
+input[type="text"]::placeholder {
+  opacity: 0.55;
+  color: white;
+}
+
+input[type="checkbox"] {
+  display: block;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--magenta);
 }
 
 img[src="./assets/cloud.svg"] {
@@ -191,32 +105,102 @@ img[src="./assets/cloud.svg"] {
   width: 45px;
   margin-top: 2px;
   cursor: pointer;
+  transition: filter 0.25s ease;
 }
 
-body > blockquote {
-  font-size: 24px;
+img[src="./assets/cloud.svg"]:hover {
+  filter: hue-rotate(-60deg);
+}
+
+#random-image {
   position: fixed;
-  bottom: 0;
-  text-align: center;
+  padding: 0;
+  opacity: 0; /* Changed by inline CSS onload */
+  filter: blur(50px);
+  z-index: 0;
+  transition: opacity, filter 0.25s ease;
 }
 
-#todo {
-  flex: 0 1 auto;
-  overflow-y: auto;
+/* Is a class for a reason */
+.wrapper {
+  max-height: 600px;
+  padding: 10px;
+  border-radius: 15px;
+  overflow: auto;
+  background-color: #00000020;
+  backdrop-filter: blur(4px) brightness(150%);
+  -webkit-backdrop-filter: blur(4px) brightness(150%);
+  box-shadow: 0 0 10px #00000080;
+}
+
+/* Text input only */
+.input-wrapper {
   display: flex;
-  flex-direction: column;
+}
+
+/* SEARCH BOX */
+#search-results {
+  display: none; /* Changed when searching */
+  padding: 0;
+  border-radius: 5px;
+  overflow-y: auto;
+}
+
+/* CLASSES BUTTONS */
+#classes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+#classes > div {
+  flex-basis: 100px;
+  flex-grow: 0;
+  margin: 5px 5px;
+  padding: 5px 10px;
+  font-size: 15px;
+  border-radius: 10px;
+  backdrop-filter: blur(4px) brightness(150%);
+  -webkit-backdrop-filter: blur(4px) brightness(150%);
+  text-align: center;
+  user-select: none;
+  cursor: pointer;
+  box-shadow: 0 0 4px #00000080;
+}
+
+.none {
+  background-color: #00000040;
+}
+
+.homework {
+  background-color: #3f991e;
+}
+
+.study {
+  background-color: var(--magenta);
+}
+
+.test {
+  background-color: #b02b02;
+}
+
+/* TODO LIST */
+#todo-input {
+  text-align: left;
 }
 
 #todo li {
   text-align: left;
-  margin: 10px 5px;
-  padding: 5px 10px;
-  font-size: 18px;
-  border-radius: 15px;
-  backdrop-filter: brightness(90%) contrast(125%);
-  -webkit-backdrop-filter: brightness(90%) contrast(125%);
-  list-style-type: none;
-  box-shadow: 0 0 4px #00000080;
+  display: flex;
+}
+
+/* Doesn't work in Chrome <105 and iOS <16.4 ugh */
+li:has(input:checked) {
+  backdrop-filter: brightness(110%) contrast(150%) !important;
+  -webkit-backdrop-filter: brightness(110%) contrast(150%) !important;
+  outline: 3px solid var(--magenta);
+  box-shadow: inset var(--magenta) 0 0 15px, var(--magenta) 0 0 30px !important;
 }
 
 #todo li img {
@@ -226,8 +210,14 @@ body > blockquote {
   margin: 5px;
 }
 
+/* CLASS TIMES */
+#times {
+  flex-basis: 300px;
+  flex-grow: 1;
+}
 
-
-*[contenteditable], #search:focus {
-  outline: none;
+#times div {
+  margin: 4px 0;
+  font-size: 18px;
+  text-align: center;
 }
