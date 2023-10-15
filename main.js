@@ -65,14 +65,17 @@ function refreshSearch() {
     }
   }
   // Remove duplicates (happens when result is matched twice)
-  let tempMatches = new Set(matches);
-  matches = Array.from(tempMatches)
+  matches = removeDupes(matches);
   document.getElementById("search-results").innerHTML = "";
   for (let i = 0; i < matches.length; i++) {
     addResult(matches[i]);
   }
   // Show pop-up with results
   document.getElementById("search-results").style.display = "block";
+}
+
+function removeDupes(array) {
+  return Array.from(new Set(array));
 }
 
 // Add a result to #results, the results unordered list (called iteratively)
@@ -88,7 +91,6 @@ let classesValues = ["none", "none", "none", "none", "none", "none", "none", "no
 classesValues = await read("classes", "main");
 // This can't be done in the await, so we redefine
 classesValues = classesValues.data;
-
 
 // Set HTML elements to array value
 for (let i = 0; i < classesValues.length; i++) {
@@ -129,36 +131,67 @@ function updateClasses() {
 }
 
 let todoListData = await read('todo', 'main');
-console.log(todoListData);
 let todoListPrivate = todoListData.private;
 todoListData = todoListData.data;
 
 for (let i = 0; i < todoListData.length; i++) {
-  addTodoElement(todoListData[i], todoListPrivate[i], todoListData.length - i);
+  addTodoElement(parseTodo(todoListData[i], ''), parseTodo(todoListData[i], 'tags'), todoListPrivate[i]);
 }
 
 function addToTodo(event) {
   if (event.code === 'Enter') {
-    addTodoElement(document.getElementById('todo-input').value, document.getElementById('todo-important').checked, 1);
+    let rawFromInput = document.getElementById('todo-input').value;
+    addTodoElement(parseTodo(rawFromInput, ''), parseTodo(rawFromInput, 'tags'), document.getElementById('todo-important').checked);
     document.getElementById('todo-input').value = '';
   }
 }
 
-function addTodoElement(content, isImportant) {
+/*
+content: Text stored in data as string in array
+tags: JSON.stringify of array in array
+isImportant: boolean
+*/
+function addTodoElement(content, tags, isImportant) {
   let element = document.createElement("li");
   element.spellcheck = false;
   element.contentEditable = true;
-  element.innerHTML = `${content}<span contenteditable="false"><input type="checkbox" ${isImportant ? 'checked' : ''}></span><img onclick="this.parentNode.remove();" src="./assets/trash.svg" alt="">`;
+  element.innerHTML = content;
+  let plaintextTags = '';
+  tags.forEach((element) => (plaintextTags += `<span class="tag">#${element}</span>`))
+  console.log(plaintextTags);
+  element.innerHTML += `<span class="tags-wrapper">${plaintextTags}</span>`;
+  element.innerHTML += `<input type="checkbox" ${isImportant ? 'checked' : ''}></span><img onclick="this.parentNode.remove();" src="./assets/trash.svg" alt="">`;
   document.getElementById("todo").prepend(element);
 }
 
 function updateTodo() {
   todoListData = [];
-  document.querySelectorAll('ul li').forEach((element) => (todoListData.unshift(element.innerText)))
+  document.querySelectorAll('ul li').forEach((element, index) => (todoListData.unshift(element.innerText)))
   todoListPrivate = [];
   document.querySelectorAll('li input').forEach((element) => (todoListPrivate.unshift(element.checked)))
   write('todo', 'main', {data: todoListData, private: todoListPrivate});
 }
+
+function parseTodo(item, toReturn) {
+  let wordArray = item.split('#');
+  if (toReturn === "tags") {
+    return wordArray.slice(1);
+  } else {
+    return wordArray[0];
+  }
+}
+// brendan good luck figuring this out (written at 11 at noght)
+function parseTags() {
+  let allTagsList = [];
+  document.querySelectorAll('ul li').forEach((element) => allTagsList = allTagsList.concat(parseTodo(element.innerText, 'tags')));
+  allTagsList = removeDupes(allTagsList);
+  let temp = '';
+  allTagsList.forEach((element) => (temp += `<span class="tag">#${element}</span>`))
+  document.querySelector('.input-wrapper ~ .tags-wrapper').innerHTML = temp;
+  return allTagsList;
+}
+
+console.log(parseTags());
 
 // Makes function global to window, needed bc modules aren't. Not the best practice, but needed as they're referenced from HTMl. Avoidable using eventListener
 window.cycleClasses = cycleClasses;
