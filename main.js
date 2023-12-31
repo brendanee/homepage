@@ -1,8 +1,8 @@
 // apiKey from localStorage
-import { apiNinjaKey } from "./apikeys.js";
+import { ninjaAPIKey } from "./apikeys.js";
 import { read, write } from "./firebase.js";
 
-await fetch("https://api.api-ninjas.com/v1/quotes?catagory=love", { headers: { "X-Api-Key": apiNinjaKey } })
+await fetch("https://api.api-ninjas.com/v1/quotes?catagory=love", { headers: { "X-Api-Key": ninjaAPIKey } })
   .then((response) => response.json())
   .then((data) => document.querySelector('body > blockquote').innerHTML = `${data[0].quote}&nbsp&nbsp&nbsp—&nbsp<i>${data[0].author}</i>`)
   .catch((error) => console.error(`404: Cannot fetch quote due to ${error}`))
@@ -130,73 +130,11 @@ function updateClasses() {
   write('classes', 'main', {data: classesValues});
 }
 
-let todoListData = await read('todo', 'main');
-let todoListPrivate = todoListData.private;
-todoListData = todoListData.data;
-
-for (let i = 0; i < todoListData.length; i++) {
-  addTodoElement(parseTodo(todoListData[i], ''), parseTodo(todoListData[i], 'tags'), todoListPrivate[i]);
-}
-
-function addToTodo(event) {
-  if (event.code === 'Enter') {
-    let rawFromInput = document.getElementById('todo-input').value;
-    addTodoElement(parseTodo(rawFromInput, ''), parseTodo(rawFromInput, 'tags'), document.getElementById('todo-important').checked);
-    document.getElementById('todo-input').value = '';
-  }
-}
-
-/*
-content: Text stored in data as string in array
-tags: JSON.stringify of array in array
-isImportant: boolean
-*/
-function addTodoElement(content, tags, isImportant) {
-  let element = document.createElement("li");
-  element.spellcheck = false;
-  element.contentEditable = true;
-  element.innerHTML = content;
-  let plaintextTags = '';
-  tags.forEach((element) => (plaintextTags += `<span class="tag">#${element}</span>`))
-  console.log(plaintextTags);
-  element.innerHTML += `<span class="tags-wrapper">${plaintextTags}</span>`;
-  element.innerHTML += `<input type="checkbox" ${isImportant ? 'checked' : ''}></span><img onclick="this.parentNode.remove();" src="./assets/trash.svg" alt="">`;
-  document.getElementById("todo").prepend(element);
-}
-
-function updateTodo() {
-  todoListData = [];
-  document.querySelectorAll('ul li').forEach((element, index) => (todoListData.unshift(element.innerText)))
-  todoListPrivate = [];
-  document.querySelectorAll('li input').forEach((element) => (todoListPrivate.unshift(element.checked)))
-  write('todo', 'main', {data: todoListData, private: todoListPrivate});
-}
-
-function parseTodo(item, toReturn) {
-  let wordArray = item.split('#');
-  if (toReturn === "tags") {
-    return wordArray.slice(1);
-  } else {
-    return wordArray[0];
-  }
-}
-// brendan good luck figuring this out (written at 11 at noght)
-function parseTags() {
-  let allTagsList = [];
-  document.querySelectorAll('ul li').forEach((element) => allTagsList = allTagsList.concat(parseTodo(element.innerText, 'tags')));
-  allTagsList = removeDupes(allTagsList);
-  let temp = '';
-  allTagsList.forEach((element) => (temp += `<span class="tag">#${element}</span>`))
-  document.querySelector('.input-wrapper ~ .tags-wrapper').innerHTML = temp;
-  return allTagsList;
-}
-
-console.log(parseTags());
 
 // Makes function global to window, needed bc modules aren't. Not the best practice, but needed as they're referenced from HTMl. Avoidable using eventListener
 window.cycleClasses = cycleClasses;
 window.resetClasses = resetClasses;
 window.refreshSearch = refreshSearch;
 window.updateClasses = updateClasses;
-window.addToTodo = addToTodo;
-window.updateTodo = updateTodo;
+
+export { removeDupes }
