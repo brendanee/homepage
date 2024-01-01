@@ -1,5 +1,5 @@
 import { read, write } from "./firebase.js";
-import { removeDupes } from "./main.js";
+import { parseTags } from "./main.js";
 
 let todoListData = await read('todo', 'main');
 let todoListImportant = todoListData.important;
@@ -14,7 +14,7 @@ function addToTodo(event) {
     let rawFromInput = document.getElementById('todo-input').value;
     addTodoElement(parseTodo(rawFromInput, ''), parseTodo(rawFromInput, 'tags'), document.getElementById('todo-important').checked);
     document.getElementById('todo-input').value = '';
-    parseTags();
+    parseTags('#todo');
   }
 }
 
@@ -52,29 +52,11 @@ function parseTodo(item, toReturn) {
   }
 }
 // brendan good luck figuring this out (written at 11 at noght)
-function parseTags() {
-  let allTagsList = [];
-  document.querySelectorAll('ul li').forEach((element) => allTagsList = allTagsList.concat(parseTodo(element.innerText, 'tags')));
-  allTagsList = removeDupes(allTagsList);
-  let temp = '';
-  allTagsList.forEach((element) => (temp += `<span onclick="filterTodo(this, '${element}');" class="tag">#${element}</span>`))
-  document.querySelector('.input-wrapper ~ .tags-wrapper').innerHTML = temp;
-  return allTagsList;
-}
 
-// more 11 o lock code gl brendan :)
-function filterTodo(me, hashtag) {
-  if (document.getElementById('todoSelected') !== me) {
-    me.setAttribute('id', 'todoSelected');
-    document.querySelectorAll('ul li').forEach((element) => element.innerHTML.includes('#' + hashtag) ? element.style.display = "flex" : element.style.display = "none");
-  } else {
-    me.setAttribute('id', '');
-    document.querySelectorAll('ul li').forEach((element) => element.style.display = "flex");
-  }
-}
 
-parseTags();
+
+
+parseTags('#todo');
 
 window.addToTodo = addToTodo;
 window.updateTodo = updateTodo;
-window.filterTodo = filterTodo;

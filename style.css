@@ -110,6 +110,8 @@ img[src="./assets/cloud.svg"]:hover {
 
 /* Is a class for a reason */
 .blur-box {
+  display: block;
+  margin-bottom: 5px;
   max-height: 600px;
   padding: 10px;
   border-radius: 15px;
@@ -118,11 +120,6 @@ img[src="./assets/cloud.svg"]:hover {
   backdrop-filter: blur(4px) brightness(150%);
   -webkit-backdrop-filter: blur(4px) brightness(150%);
   box-shadow: 0 0 10px #00000080;
-  display: flex;
-}
-
-#classes, #classes + .blur-box {
-  display: block;
 }
 
 /* Text input only */
@@ -151,7 +148,7 @@ white-space: nowrap;
   text-shadow: none;
 }
 
-.tag#todoSelected {
+.tag.selected {
   border: 2px solid var(--dark-blue);
   color: var(--dark-blue);
   background-color: var(--blue);

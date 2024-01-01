@@ -15,6 +15,10 @@
         <input id="search" autocomplete="off" type="text" placeholder="What's on your mind?" onkeyup="refreshSearch()">
         <input type="checkbox" name="Private" id="todo-private">
       </div>
+      <div class="tags-wrapper">
+        <span class="tag">#tag</span>
+        <span class="tag">#another-tag</span>
+      </div>
       <!-- #results is auto-populated from JS -->
       <ul id="search-results"></ul>
     </div>
@@ -58,8 +62,11 @@
       <div class="input-wrapper"  style="display: block"> <!--HELP IM DYING OF EVENTLISNTRR WEIRDNESS-->
         <input type="text" placeholder="Enter magic string" id="apiKeyInput">
         <br>
-        <p" id="apiKeyMessage">You currently do not have an API key & Firebase config details inputted, or are offline. Note this is not intended to be public facing, and as such will have no corrosponding documentation (other than the <a href="http://">source code</a>)</p>
+        <p" id="apiKeyMessage">You currently do not have an API key & Firebase config details inputted, or are offline. This subpage is not intended to be public facing, and as such will have no corresponding documentation (other than the <a href="https://github.com/brendanee/homepage">source code</a>)</p>
       </div>
+    </div>
+    <div class="blur-box">
+      <textarea name="" id="" cols="30" rows="10"></textarea>
     </div>
   </div>
   <blockquote><i></i></blockquote>
@@ -80,5 +87,7 @@
 
     document.getElementById('random-image').src = `https://wsrv.nl/?url=https://source.unsplash.com/random/${window.innerWidth}x${window.innerHeight}?${vibe}&max-age=1d&con=20&mod=0.7&random=${Math.floor(Math.random() * 6)}`;
   </script>
+    <script type="module" src="./search.js"></script>
+
 </body>
 </html>

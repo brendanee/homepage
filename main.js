@@ -2,87 +2,37 @@
 import { ninjaAPIKey } from "./apikeys.js";
 import { read, write } from "./firebase.js";
 
+function removeDupes(array) {
+  return Array.from(new Set(array));
+}
+
 await fetch("https://api.api-ninjas.com/v1/quotes?catagory=love", { headers: { "X-Api-Key": ninjaAPIKey } })
   .then((response) => response.json())
   .then((data) => document.querySelector('body > blockquote').innerHTML = `${data[0].quote}&nbsp&nbsp&nbsp—&nbsp<i>${data[0].author}</i>`)
   .catch((error) => console.error(`404: Cannot fetch quote due to ${error}`))
 
-let search = [];
-await fetch("https://raw.githubusercontent.com/brendanee/Taskbar/main/result.json")
-  .then((response) => response.json())
-  .then((data) => search = data)
-  .catch((error) => console.error(`404: Cannot fetch search data due to ${error}`));
-
-// Function called when something's typed in the search box. Called each key stroke
-// Needs global scope because code compares it against previous version before overwriting
-let matches = [];
-function refreshSearch() {
-  // Make typed the current text input value
-  let typed = document.getElementById("search").value;
-  // If nothing is typed (i.e. user backspaced everything they typed)
-  if (typed == "") {
-    // Hide pop-up with search results (since there are none)
-    document.getElementById("search-results").style.display = "none";
-    // End function (no need to check for search term matches as there are none)
-    return;
-  }
-  // If the last character typed is a number (special case to open link)
-  // This deals with already typed text
-  if (!isNaN(typed.slice(typed.length - 1))) {
-    // Set matchIndex to the this number
-    let matchIndex = typed.slice(typed.length - 1);
-    // No clue || the number is more than the length of the results
-    if (typed.slice(typed.length - 1) == 0 || typed.slice(typed.length - 1) > matches.length) {
-      // Set the index to the last result
-      matchIndex = matches.length;
-    }
-    // Open the corresponding result link
-    window.open("https://" + search[matches[matchIndex - 1]].link, "_blank");
-    // Hide pop-up with search results
-    document.getElementById("search-results").style.display = "none";
-    // Clear the input
-    document.getElementById("search").value = "";
-    // End (search has been completed)
-    return;
-  }
-  // Reset matches array
-  matches = [];
-  let currentKeywords = [];
-  // Iterate for each object in the search array
-  for (let i = 0; i < search.length; i++) {
-    // Make an array of the search terms for the current (iterated) object using the space seperated array of keywords
-    currentKeywords = search[i].keywords.split(" ");
-    // Add the name to the list in lower case
-    currentKeywords.push(search[i].name.toLowerCase());
-    // Check if the current input matches any of these
-    let j = 0;
-    while (j < currentKeywords.length) {
-      if (currentKeywords[j].includes(typed)) {
-        // If the current keyword includes what is currently typed, add the object number to the results
-        matches.push(i);
-      }
-      j++;
-    }
-  }
-  // Remove duplicates (happens when result is matched twice)
-  matches = removeDupes(matches);
-  document.getElementById("search-results").innerHTML = "";
-  for (let i = 0; i < matches.length; i++) {
-    addResult(matches[i]);
-  }
-  // Show pop-up with results
-  document.getElementById("search-results").style.display = "block";
+function parseTags(listID) {
+  let allTagsList = [];
+  
+  document.querySelectorAll(listID + ' li').forEach((element) => allTagsList = allTagsList.concat(element.querySelector('.tags-wrapper').innerText.replaceAll('#', ' ').split(' ')));
+  allTagsList = removeDupes(allTagsList);
+console.log(allTagsList.indexOf(''));
+  allTagsList.splice(allTagsList.indexOf(''), 1);    
+  let temp = '';
+  allTagsList.forEach((element) => (temp += `<span onclick="filterList(this, '${element}', '${listID}');" class="tag">#${element}</span>`))
+  document.querySelector(`*:has(+ ${listID})`).innerHTML = temp;
+  
 }
 
-function removeDupes(array) {
-  return Array.from(new Set(array));
-}
-
-// Add a result to #results, the results unordered list (called iteratively)
-function addResult(index) {
-  let element = document.createElement("li");
-  element.innerHTML = `<a href="https://${search[index].link}" target="_blank">${search[index].name}</a><span> #${search[index].tags.replaceAll(" ", " #")}</span>`;
-  document.getElementById("search-results").appendChild(element);
+// more 11 o lock code gl brendan :)
+function filterList(me, hashtag, listID) {
+  if (!Array.from(document.getElementsByClassName('selected')).includes(me)) {
+    me.classList.add('selected');
+    document.querySelectorAll(listID + ' li').forEach((element) => element.innerHTML.includes('#' + hashtag) ? element.style.display = "flex" : element.style.display = "none");
+  } else {
+    me.classList.remove('selected');
+    document.querySelectorAll(listID + ' li').forEach((element) => element.style.display = "");
+  }
 }
 
 // All class selector code
@@ -134,7 +84,6 @@ function updateClasses() {
 // Makes function global to window, needed bc modules aren't. Not the best practice, but needed as they're referenced from HTMl. Avoidable using eventListener
 window.cycleClasses = cycleClasses;
 window.resetClasses = resetClasses;
-window.refreshSearch = refreshSearch;
 window.updateClasses = updateClasses;
-
-export { removeDupes }
+window.filterList = filterList;
+export { removeDupes, parseTags }
