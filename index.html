@@ -52,9 +52,9 @@
     </div>
   </div>
   <div class="column">
-    <div class="blur-box" id="times">
-      <div>Class ends in X minutes, at ##:##</div>
-      <div>Class starts in X minutes, at ##:##</div>
+    <div class="blur-box" id="calendar">
+      <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&showPrint=0&showTitle=0&showCalendars=0&showTz=0&mode=AGENDA&src=YnJlbmRhbmVlMzE0QGdtYWlsLmNvbQ&src=ZmFtaWx5MTE2NTg4NDA5NDI0NjUxOTcyNzlAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=ZW4udXNhLm9mZmljaWFsI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=ZWVqb3NlcGhpbmUzMTRAZ21haWwuY29t&src=am5tdXNzZzQyYW9xbmNtazM3MXVoYzdlc29hMXN0ZGxAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23c092cc&color=%23009688&color=%23cc8f8f&color=%23009688&color=%239ccca1"></iframe>
+      <div id="cover"></div>
     </div>
     <div class="blur-box"  >
       <div class="input-wrapper"  style="display: block"> <!--HELP IM DYING OF EVENTLISNTRR WEIRDNESS-->
@@ -71,24 +71,6 @@
   </div>
   <blockquote><i></i></blockquote>
   <script type="module" src="./main.js"></script>
-  <!-- Not needed anymore, as the service is down
-  <script>
-    // Inline script for fast stuff as soon as HTML loads
-    let currentHour = new Date().getHours();
-    let vibe = '';
-    if (currentHour >= 4 && currentHour <= 9) {
-      vibe = "sunrise";
-    } else if (currentHour >= 10 && currentHour <= 15) {
-      vibe = "day";
-    } else if (currentHour >= 16 && currentHour <= 18) {
-      vibe = "sunset";
-    } else if (currentHour >= 19 || currentHour <= 3) {
-      vibe = "night";
-    }
-
-    document.getElementById('random-image').src = `https://wsrv.nl/?url=https://source.unsplash.com/random/${window.innerWidth}x${window.innerHeight}?${vibe}&max-age=1d&con=20&mod=0.7&random=${Math.floor(Math.random() * 6)}`;
-  </script>-->
-    <script type="module" src="./search.js"></script>
-
+  <script type="module" src="./search.js"></script>
 </body>
 </html>
