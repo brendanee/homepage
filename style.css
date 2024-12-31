@@ -256,7 +256,7 @@ li:has(input:checked) {
 
 /* BUBBLES */
 #bubbles {
-  padding: 5px;
+  padding: 30px;
   max-height: 600px;
   overflow: auto
 }
@@ -269,7 +269,39 @@ li:has(input:checked) {
   margin: 2px;
   float: left;
 }
-.bubble > img {
+.bubble img {
   width: 25px;
   height: 25px;
+}
+
+.bubble a img {
+  outline: 5px solid var(--off-black);
+}
+
+#up {
+  outline: 5px solid var(--off-black);
+  background-color: var(--off-black);
+  position: absolute;
+  top: -25px;
+}
+
+#down {
+  outline: 5px solid var(--off-black);
+  background-color: var(--off-black);
+  position: absolute;
+  bottom: -25px;
+}
+
+#left {
+  outline: 5px solid var(--off-black);
+  background-color: var(--off-black);
+  position: absolute;
+  left: -25px;
+}
+
+#right {
+  outline: 5px solid var(--off-black);
+  background-color: var(--off-black);
+  position: absolute;
+  right: -25px;
 }
