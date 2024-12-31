@@ -14,8 +14,9 @@ body {
   font-family: "Anek-Latin", sans-serif !important;
   justify-content: center;
   color: white;
-  background: var(--dark-blue);
+  background-image: url("./assets/background.webp");
   text-shadow: 0 0 0.3em black, 0 0 0.3em black;
+  z-index: -999;
 }
 
 .column {
@@ -100,12 +101,12 @@ img[src="./assets/cloud.svg"]:hover {
   filter: hue-rotate(-60deg);
 }
 
-#random-image {
+#background-image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
   position: fixed;
   padding: 0;
-  opacity: 0; /* Changed by inline CSS onload */
-  filter: blur(50px);
-  transition: opacity, filter 0.25s ease;
 }
 
 /* Is a class for a reason */
@@ -176,14 +177,21 @@ white-space: nowrap;
   margin: 5px 5px;
   padding: 5px 10px;
   font-size: 15px;
-  border-radius: 10px;
-  backdrop-filter: blur(4px) brightness(150%);
-  -webkit-backdrop-filter: blur(4px) brightness(150%);
+  border: 1px solid black;
+  backdrop-filter: brightness(150%);
   text-align: center;
   user-select: none;
   cursor: pointer;
   box-shadow: 0 0 4px #00000080;
   transition: background-color 0.1s ease;
+  z-index: 99;
+}
+
+#classes > div > span {
+  background-color: black;
+  height: 20px;
+  float: right;
+  display: block;
 }
 
 .none {

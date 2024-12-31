@@ -53,10 +53,10 @@ function cycleClasses(index) {
   // Plus one is required because CSS starts at one, and we're using querySelector
   switch (document.querySelector(`#classes div:nth-child(${index + 1})`).className) {
     case 'none':
-      newClass = "homework";
+      newClass = "mon";
       break;
-    case 'homework':
-      newClass = "study";
+    case 'mon':
+      newClass = "tue";
       break;
     case 'study':
       newClass = "test";
