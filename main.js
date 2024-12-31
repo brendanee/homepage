@@ -6,7 +6,7 @@ function removeDupes(array) {
   return Array.from(new Set(array));
 }
 
-await fetch("https://api.api-ninjas.com/v1/quotes?catagory=love", { headers: { "X-Api-Key": ninjaAPIKey } })
+await fetch("https://api.api-ninjas.com/v1/quotes", { headers: { "X-Api-Key": ninjaAPIKey } })
   .then((response) => response.json())
   .then((data) => document.querySelector('body > blockquote').innerHTML = `${data[0].quote}&nbsp&nbsp&nbsp—&nbsp<i>${data[0].author}</i>`)
   .catch((error) => console.error(`404: Cannot fetch quote due to ${error}`))
@@ -36,54 +36,61 @@ function filterList(me, hashtag, listID) {
 }
 
 // All class selector code
-// Init classesValues to all nones (in case Cloud Firestore fails to connect)
-let classesValues = ["none", "none", "none", "none", "none", "none", "none", "none", "none", "none"]
+// Init classesValues to all -1 (in case Cloud Firestore fails to connect)
+let classesValues = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 classesValues = await read("classes", "main");
 // This can't be done in the await, so we redefine
 classesValues = classesValues.data;
 
 // Set HTML elements to array value
-for (let i = 0; i < classesValues.length; i++) {
-  document.querySelector(`#classes div:nth-child(${i + 1})`).className = classesValues[i];
+classesValues.forEach((e,i) => toScreen(i));
+
+function toScreen(i) {
+  document.querySelector(`#classes > div:nth-child(${i + 1}) > span`).innerHTML = twoLetter(classesValues[i]);
+  write('classes', 'main', {data: classesValues});
 }
 
-// Called on click of a classes button. Simply cycles through the possible classes, and updates array
-function cycleClasses(index) {
-  let newClass;
-  // Plus one is required because CSS starts at one, and we're using querySelector
-  switch (document.querySelector(`#classes div:nth-child(${index + 1})`).className) {
-    case 'none':
-      newClass = "mon";
-      break;
-    case 'mon':
-      newClass = "tue";
-      break;
-    case 'study':
-      newClass = "test";
-      break;
+function twoLetter(num) {
+  switch (num) {
+    case 0:
+      return 'Sn';
+    case 1:
+      return 'Mn';
+    case 2:
+      return 'Tu';
+    case 3:
+      return 'We';
+    case 4:
+      return 'Th';
+    case 5:
+      return 'Fr';
+    case 6:
+      return 'Sa';
+    case 7:
+      return '/';
     default:
-      newClass = "none";
+      return '/'
   }
-  document.querySelector(`#classes div:nth-child(${index + 1})`).className = newClass;
-  // Updating master array
-  classesValues[index] = newClass;
+}
+
+function cycleClasses(index) {
+  if (classesValues[index] === -1) {
+    classesValues[index] = (new Date).getDay();
+  } else {
+    classesValues[index] = (classesValues[index] + 1) % 7;
+  }
+  toScreen(index);
 }
 
 // Called on right-click of the classes button. Resets classes button to none.
 function resetClasses(index) {
-  document.querySelector(`#classes div:nth-child(${index + 1})`).className = "none";
-  classesValues[index] = "none";
+  classesValues[index] = -1;
+  toScreen(index);
 }
-
-// Called when blue cloud is clicked.
-function updateClasses() {
-  write('classes', 'main', {data: classesValues});
-}
-
 
 // Makes function global to window, needed bc modules aren't. Not the best practice, but needed as they're referenced from HTMl. Avoidable using eventListener
 window.cycleClasses = cycleClasses;
 window.resetClasses = resetClasses;
-window.updateClasses = updateClasses;
 window.filterList = filterList;
+
 export { removeDupes, parseTags }
