@@ -6,7 +6,7 @@ import { firebaseConfig } from "./apikeys.js";
 // The Firebase app itself, needed for literally everything to work
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
 // Firestore, the product that we're using to store data, plus some functions we need from it
-import { getFirestore, doc, getDoc, setDoc} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
 // Initialize Firebase config-ralted things
 const app = initializeApp(firebaseConfig);
@@ -27,6 +27,15 @@ async function read(collection, document) {
     }
 }
 
+async function readAll(col) {
+  let querySnapshot = await getDocs(collection(db, col))
+  let build = [];
+  querySnapshot.forEach((doc) => {
+    build.push(doc.data());
+  })
+  return build;
+}
+
 // One more property than read because we need to define what to write and what field
 async function write(collection, document, data) {
   const docRef = doc(db, collection, document);
@@ -35,4 +44,4 @@ async function write(collection, document, data) {
 }
 
 // JS modules: Exporting read and write to main.js
-export { read, write };
+export { read, readAll, write };

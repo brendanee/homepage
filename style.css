@@ -250,5 +250,26 @@ li:has(input:checked) {
   width: calc(100% - 20px);
   height: 600px;
   backdrop-filter: invert(100%) hue-rotate(250deg) contrast(1.1);
+  -webkit-backdrop-filter: invert(100%) hue-rotate(250deg) contrast(1.1);
   pointer-events: none;
+}
+
+/* BUBBLES */
+#bubbles {
+  padding: 5px;
+  max-height: 600px;
+  overflow: auto
+}
+.bubble {
+  backdrop-filter: brightness(150%);
+  -webkit-backdrop-filter: brightness(150%);
+  padding: 15px;
+  width: 25px;
+  height: 25px;
+  margin: 2px;
+  float: left;
+}
+.bubble > img {
+  width: 25px;
+  height: 25px;
 }
