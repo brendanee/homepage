@@ -16,6 +16,7 @@ body {
   color: white;
   /*text-shadow: 0 0 0.3em black, 0 0 0.3em black;*/
   z-index: -999;
+  background-color: var(--off-purple);
 }
 
 .column {
@@ -47,13 +48,11 @@ ul li {
   margin: 10px 0;
   padding: 5px;
   font-size: 18px;
-  border-radius: 15px;
-  backdrop-filter: brightness(90%) contrast(125%);
-  -webkit-backdrop-filter: brightness(90%) contrast(125%);
+  backdrop-filter: contrast(150%);
+  -webkit-backdrop-filter: contrast(150%);
   color: white;
   text-align: center;
   list-style-type: none;
-  box-shadow: 0 0 4px #00000080;
   word-break: break-all;
 }
 
@@ -106,7 +105,8 @@ img[src="./assets/cloud.svg"]:hover {
   height: 100%;
   position: fixed;
   padding: 0;
-  filter: brightness(80%);
+  /* Needed otherwise image gets stuffed on top? */
+  z-index: -1;
 }
 
 /* Is a class for a reason */
@@ -116,9 +116,6 @@ img[src="./assets/cloud.svg"]:hover {
   max-height: 600px;
   padding: 10px;
   overflow: auto;
-  background-color: #00000020;
-  backdrop-filter: brightness(150%);
-  -webkit-backdrop-filter: brightness(150%);
 }
 
 /* Text input only */
@@ -137,27 +134,37 @@ white-space: nowrap;
   /**/}
 
 .tag {
+  display: inline-block;
   margin-right: 5px;
-  padding: 2px 5px;
+  padding: 2px 5px 2px 11.5px;
   font-size: 15px;
-  border: 2px solid var(--magenta);
-  border-radius: 13px;
-  color: var(--magenta);
-  background-color: var(--pink);
+  color: white;
+  
+  backdrop-filter: brightness(150%);
+  -webkit-backdrop-filter: brightness(150%);
   text-shadow: none;
 }
 
-.tag.selected {
-  border: 2px solid var(--dark-blue);
-  color: var(--dark-blue);
-  background-color: var(--blue);
+.tag::before {
+  padding: 2px 5px;
+  content: "#";
+  position: absolute;
+  background-color: var(--off-black);
+  top: 0;
+  left: 0;
+  /* Annoying magic number */
+  width: 10px;
+  text-align: center;
+}
+
+.tag.selected::before {
+  background-color: var(--magenta);
 }
 
 /* SEARCH BOX */
 #search-results {
   display: none; /* Changed when searching */
   padding: 0;
-  border-radius: 5px;
   overflow-y: auto;
 }
 
@@ -237,6 +244,7 @@ li:has(input:checked) {
   flex-grow: 1;
   max-height: unset;
   mix-blend-mode: plus-lighter;
+  position: relative;
 }
 
 #calendar > iframe {
@@ -249,8 +257,8 @@ li:has(input:checked) {
   position: absolute;
   width: calc(100% - 20px);
   height: 600px;
-  backdrop-filter: invert(100%) hue-rotate(250deg) contrast(1.1);
-  -webkit-backdrop-filter: invert(100%) hue-rotate(250deg) contrast(1.1);
+  backdrop-filter: invert(100%) hue-rotate(250deg) contrast(1.2);
+  -webkit-backdrop-filter: invert(100%) hue-rotate(250deg) contrast(1.2);
   pointer-events: none;
 }
 
@@ -260,9 +268,10 @@ li:has(input:checked) {
   max-height: 600px;
   overflow: auto
 }
+
 .bubble {
-  backdrop-filter: brightness(150%);
-  -webkit-backdrop-filter: brightness(150%);
+  backdrop-filter: contrast(150%);
+  -webkit-backdrop-filter: contrast(150%);
   padding: 15px;
   width: 25px;
   height: 25px;
