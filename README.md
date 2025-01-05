@@ -1,4 +1,10 @@
 # About
-My "homepage". I've set it to my new tab page, and it houses many things I use to be productive (i.e. todo list, remainders, class indicators).
+My "homepage," although it's more of a new tab page.
+## Features
+- Todo list (soon to be gameified)
+- Good-looking Google calender embed (`mix-blend-mode` for the win)
+- Quicklinks to common websites
+- ✨Cloud✨ synchronization, by way of a scuffed Firebase DB
+- Indicator for assignment due dates
 # Quickstart
-_You don't want to use this._
+Just for me honestly. _You don't want to use this_, it works not well

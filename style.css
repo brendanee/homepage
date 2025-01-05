@@ -3,6 +3,12 @@
 
 html {
   --b-sunset: linear-gradient(135deg, rgb(204,129,8) 0%, var(--magenta) 100%) 2;
+
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #1a095e80 transparent;
 }
 
 body {
@@ -22,7 +28,7 @@ body {
 .column {
   flex: 1 1 350px;
   max-height: calc(100% - 10px); /* Account for padding */
-  padding-top: 10px;
+  padding-top: 5px;
 }
 
 body > blockquote {
@@ -66,16 +72,31 @@ input[type="text"] {
   display: block;
   width: 100%;
   font-size: 20px;
-  border-style: none none solid none;
-  border-image: var(--b-sunset);
+  border-style: solid;
+  border-image: linear-gradient(25deg, var(--pink) 0%, transparent 20px) 2;
+  /*border-image: linear-gradient(135deg, rgb(204,129,8) 0%, var(--magenta) 100%) 2;*/
+/*  border-color: var(--pink);*/
   color: white;
   background-color: transparent;
-  text-align: center;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-image: linear-gradient(5deg, white 0%, transparent 25px) 2;
+}
+
+input[type="date"] {
+  background-color: transparent;
+  filter: invert(100%);
+  border: none;
+  font-size: 30px;
+  width: 30px;
 }
 
 input[type="text"]::placeholder {
   opacity: 0.55;
-  color: white;
+  color: var(--pink);
+  background-clip: text;
   font-family: "Anek-Latin", sans-serif;
 }
 
@@ -105,6 +126,7 @@ img[src="./assets/cloud.svg"]:hover {
   height: 100%;
   position: fixed;
   padding: 0;
+  filter: brightness(75%);
   /* Needed otherwise image gets stuffed on top? */
   z-index: -1;
 }
@@ -113,7 +135,6 @@ img[src="./assets/cloud.svg"]:hover {
 .blur-box {
   display: block;
   margin-bottom: 5px;
-  max-height: 600px;
   padding: 10px;
   overflow: auto;
 }
@@ -313,4 +334,12 @@ li:has(input:checked) {
   background-color: var(--off-black);
   position: absolute;
   right: -25px;
+}
+
+#list {
+  padding: 5px;
+}
+
+#list-input, #list-date {
+  display: block;
 }

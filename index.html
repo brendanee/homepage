@@ -8,7 +8,7 @@
   <link href="./style.css" rel="stylesheet">
 </head>
 <body>
-  <img loading="lazy" id="background-image" alt="Pink, blurred, image of a beach" src="./assets/background.webp">
+  <img loading="lazy" id="background-image" alt="Pink, blurred, image of a beach" src="./assets/pink.webp">
   <div class="column">
     <div class="blur-box">
       <div class="input-wrapper">
@@ -25,6 +25,14 @@
     <div id="bubbles">
       <div class="bubble" onclick="createNew()"><img src="./assets/plus.svg"></div>
       <script type="module" src="./bubbles.js"></script>
+    </div>
+    <div id="list">
+      <input type="text" placeholder="Add to the todo list!" id="list-input">
+      <!-- JS silliness to goto current day, -->
+      <input type="date" id="list-date" onclick="this.value = (new Date).toISOString().split('T')[0]">
+      <!-- JS will fill in -->
+      <ul>
+      </ul>
     </div>
   </div>
   <div class="column">
@@ -64,7 +72,7 @@
       <div class="input-wrapper"  style="display: block"> <!--HELP IM DYING OF EVENTLISNTRR WEIRDNESS-->
         <input type="text" placeholder="Enter magic string" id="apiKeyInput">
         <br>
-        <p" id="apiKeyMessage">You currently do not have an API key & Firebase config details inputted, or are offline. This subpage is not intended to be public facing, and as such will have no corresponding documentation (other than the <a href="https://github.com/brendanee/homepage">source code</a>)</p>
+        <p id="apiKeyMessage">You currently do not have an API key & Firebase config details inputted, or are offline. This subpage is not intended to be public facing, and as such will have no corresponding documentation (other than the <a href="https://github.com/brendanee/homepage">source code</a>)</p>
       </div>
     </div>
     <div class="blur-box">
