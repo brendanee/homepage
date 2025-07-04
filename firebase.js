@@ -1,24 +1,45 @@
-// Object containing config details, from localStorage
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-import { firebaseConfig } from "./apikeys.js";
-
-// Import the functions you need from the SDKs you need
-// The Firebase app itself, needed for literally everything to work
+// Import various functions from Google's Firebase. You're supposed to do this via npm, but...
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-// Firestore, the product that we're using to store data, plus some functions we need from it
 import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
-// Initialize Firebase config-ralted things
+const firebaseConfig = {
+  apiKey: "AIzaSyCNzLIk62KYdSsHOcOHj0NMBDtMEwipO1A",
+  authDomain: "total-casing-389917.firebaseapp.com",
+  projectId: "total-casing-389917",
+  storageBucket: "total-casing-389917.firebasestorage.app",
+  messagingSenderId: "323564904571",
+  appId: "1:323564904571:web:b88c2197a6a8d54d4082de",
+  measurementId: "G-G42N5TP70D"
+};
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth();
+
+// Bit like an event listener
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    document.querySelector('header > p').innerHTML = user.displayName;
+    document.getElementById('sign-out').style.display = 'inline-block';
+    document.querySelector('form').style.display = 'none';
+    // Custom- so fancy! Listened for in every other module.
+    document.dispatchEvent(new Event('firebasedone'));
+  }
+})
+
+function signIn() {
+  const email = document.getElementById('email-input').value;
+  const password = document.getElementById('password-input').value;
+  signInWithEmailAndPassword(auth, email, password)
+  .catch((error) => alert(`${error.code}: ${error.message}`));
+}
 
 // Function is async because we need await for fetch request
 async function read(collection, document) {
     const docRef = doc(db, collection, document);
     const docSnap = await getDoc(docRef);
-    // If the doc we're looking for exists...
     if (docSnap.exists()) {
-      // Return it out of the function
       return docSnap.data();
     } else {
       // docSnap.data() will be undefined in this case
@@ -36,12 +57,16 @@ async function readAll(col) {
   return build;
 }
 
-// One more property than read because we need to define what to write and what field
 async function write(collection, document, data) {
   const docRef = doc(db, collection, document);
   // Very jank, implements security holes
   await setDoc(docRef, data);
 }
 
-// JS modules: Exporting read and write to main.js
+document.getElementById('sign-in').addEventListener('click', signIn, false);
+document.getElementById('sign-out').addEventListener('click', () => {
+  signOut(auth).catch((error) => console.error(error));
+  location.reload();
+}, false);
+
 export { read, readAll, write };

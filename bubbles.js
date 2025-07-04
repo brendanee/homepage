@@ -1,4 +1,5 @@
 import { read, readAll, write } from "./firebase.js";
+let bubbles = [];
 
 function createNew(clip) {
   // If there's no clipboard text, get it, then recurse
@@ -11,27 +12,25 @@ function createNew(clip) {
     if (clip.substring(0, 4) !== 'http') {
       clip = 'https://' + clip;
     }
-    write('bubbles', curIndex, {double: clip});
-    bubbles.push({'double': clip});
+    const title = document.getElementById('bubbles-input').value
+    write('bubbles', curIndex, {link: clip, title: title});
+    bubbles.push({link: clip, title: title});
     renderBubble(bubbles.length - 1);
   }
 }
 
-// Render all stored bubbles
-let bubbles = await readAll('bubbles');
-bubbles.forEach((e, i) => {
-  renderBubble(i);
-})
+
 
 // Prepends bubbles
 function renderBubble(index) {
-  let ele = document.createElement('div');
+  const bubble = bubbles[index];
+  const ele = document.createElement('a');
   ele.setAttribute('class', 'bubble');
-  ele.setAttribute('onclick', `processBubble(${index})`);
-  ele.innerHTML = `<img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${bubbles[index].double}&size=64">`;
+  ele.setAttribute('href', bubble.link);
+  ele.innerHTML = `<img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${bubble.link}&size=64"><p>${bubble.title}</p>`;
   document.getElementById('bubbles').prepend(ele);
 }
-
+/*
 // Pushes clicked bubble to top, adds <a>, then adds other links
 function processBubble(index) {
   let data = bubbles[index];
@@ -76,8 +75,17 @@ function setDir(dir, index, url) {
     addDir(dir, url, curBubble, index);
   }
 }
-
+*/
 // Hacky but oh well
 window.createNew = createNew;
-window.processBubble = processBubble;
-window.setDir = setDir;
+
+document.addEventListener('firebasedone', async () => {
+  
+  bubbles = await readAll('bubbles');
+  console.log(bubbles);
+  
+  bubbles.forEach((e, i) => {
+    renderBubble(i);
+  })
+  
+}, false)

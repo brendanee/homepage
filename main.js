@@ -1,15 +1,16 @@
 // apiKey from localStorage
-import { ninjaAPIKey } from "./apikeys.js";
 import { read, write } from "./firebase.js";
+
+function makeToast(message) {
+  const toast = document.getElementById('toast');
+  toast.innerHTML = `${message}<button onclick="document.getElementById('toast').style.display = 'none'">Ok</button>`;
+  setTimeout(document.getElementById('toast').style.display = 'none', 5000);
+  toast.style.display = 'block';
+}
 
 function removeDupes(array) {
   return Array.from(new Set(array));
 }
-
-await fetch("https://api.api-ninjas.com/v1/quotes", { headers: { "X-Api-Key": ninjaAPIKey } })
-  .then((response) => response.json())
-  .then((data) => document.querySelector('body > blockquote').innerHTML = `${data[0].quote}&nbsp&nbsp&nbsp—&nbsp<i>${data[0].author}</i>`)
-  .catch((error) => console.error(`404: Cannot fetch quote due to ${error}`))
 
 function parseTags(listID) {
   let allTagsList = [];

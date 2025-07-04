@@ -8,6 +8,17 @@
   <link href="./style.css" rel="stylesheet">
 </head>
 <body>
+  <header>
+    <p>Not Signed In</p>
+    <form>
+      <input type="email" name="email" autocomplete="email" id="email-input">
+      <input type="password" name="password" autocomplete="current-password" id="password-input">
+      <button type="button" id="sign-in">Sign In</button>
+    </form>
+
+    <button id="sign-out">Sign Out</button>
+
+  </header>
   <img loading="lazy" id="background-image" alt="Pink, blurred, image of a beach" src="./assets/pink.webp">
   <div class="column">
     <div class="blur-box">
@@ -22,6 +33,7 @@
       <!-- #results is auto-populated from JS -->
       <ul id="search-results"></ul>
     </div>
+    <input id="bubbles-input" autocomplete="off" type="text" placeholder="Bubble discription...">
     <div id="bubbles">
       <div class="bubble" onclick="createNew()"><img src="./assets/plus.svg"></div>
       <script type="module" src="./bubbles.js"></script>
@@ -36,8 +48,9 @@
     </div>
   </div>
   <div class="column">
+    
     <!-- JS will populate #classes div with classes when Firestore connects -->
-    <div id="classes">
+    <div id="classes" style="display: none">
       <div>Calc<span onclick="cycleClasses(0);" oncontextmenu="resetClasses(0); return false;">X</span></div>
       <div>English<span onclick="cycleClasses(1);" oncontextmenu="resetClasses(1); return false;">X</span></div>
       <div>T. Theater<span onclick="cycleClasses(2);" oncontextmenu="resetClasses(2); return false;">X</span></div>
@@ -49,6 +62,7 @@
       <div>Kwlg Bowl<span onclick="cycleClasses(8);" oncontextmenu="resetClasses(8); return false;"> X</span></div>
       <div>Sports<span onclick="cycleClasses(9);" oncontextmenu="resetClasses(9); return false;">X</span></div>
     </div>
+    
     <div class="blur-box">
       <script type="module" src="./todo.js"></script>
       <div class="input-wrapper">
@@ -64,24 +78,14 @@
     </div>
   </div>
   <div class="column">
-    <div class="blur-box" id="calendar">
-      <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&showPrint=0&showTitle=0&showCalendars=0&showTz=0&mode=AGENDA&src=YnJlbmRhbmVlMzE0QGdtYWlsLmNvbQ&src=ZmFtaWx5MTE2NTg4NDA5NDI0NjUxOTcyNzlAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=ZW4udXNhLm9mZmljaWFsI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=ZWVqb3NlcGhpbmUzMTRAZ21haWwuY29t&src=am5tdXNzZzQyYW9xbmNtazM3MXVoYzdlc29hMXN0ZGxAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23c092cc&color=%23009688&color=%23cc8f8f&color=%23009688&color=%239ccca1"></iframe>
+
+  </div>
+  <div id="toast"></div>
+      <div id="calendar">
+        <iframe src="https://calendar.google.com/calendar/u/0/embed?height=600&wkst=1&ctz=America/Los_Angeles&showPrint=0&showTitle=0&showTz=0&showCalendars=0&showTabs=0&mode=WEEK&hl=en&src=YnJlbmRhbmVlMzE0QGdtYWlsLmNvbQ&src=ZmFtaWx5MTE2NTg4NDA5NDI0NjUxOTcyNzlAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=ZW4udXNhLm9mZmljaWFsI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=ZWVqb3NlcGhpbmUzMTRAZ21haWwuY29t&color=%23f3c7ff&color=%23009688&color=%23ffc4c4&color=%233f51b5"></iframe>
       <div id="cover"></div>
     </div>
-    <div class="blur-box"  >
-      <div class="input-wrapper"  style="display: block"> <!--HELP IM DYING OF EVENTLISNTRR WEIRDNESS-->
-        <input type="text" placeholder="Enter magic string" id="apiKeyInput">
-        <br>
-        <p id="apiKeyMessage">You currently do not have an API key & Firebase config details inputted, or are offline. This subpage is not intended to be public facing, and as such will have no corresponding documentation (other than the <a href="https://github.com/brendanee/homepage">source code</a>)</p>
-      </div>
-    </div>
-    <div class="blur-box">
-      <script type="module" src="./remember.js"></script>
-      <div style="white-space: pre-wrap;" contenteditable="true" id="remember"></div>
-      <img onclick="updateRemember()" src="./assets/cloud.svg" alt="A blue cloud drawing with white arrows indicating refresh">
-    </div>
-  </div>
-  <blockquote><i></i></blockquote>
+
   <script type="module" src="./main.js"></script>
   <script type="module" src="./search.js"></script>
 </body>
