@@ -114,14 +114,14 @@ input[type="text"]::placeholder {
   background-clip: text;
   font-family: "Anek-Latin", sans-serif;
 }
-
+/*
 input[type="checkbox"] {
   display: block;
   width: 20px;
   height: 20px;
   accent-color: var(--magenta);
 }
-
+*/
 img[src="./assets/cloud.svg"] {
   display: block;
   width: 45px;
@@ -296,7 +296,7 @@ li:has(input:checked) {
   height: 450px;
   pointer-events: none;
   @media (prefers-color-scheme: light) {
-    backdrop-filter: hue-rotate(250deg) contrast(1.2);
+    backdrop-filter: hue-rotate(50deg) contrast(1.2);
   }
   @media (prefers-color-scheme: dark) {
     backdrop-filter: invert(100%) hue-rotate(250deg) contrast(1.2);
@@ -357,13 +357,12 @@ li:has(input:checked) {
   /*display: flex;*/
 }
 
-#list-input-wrapper > button {
+
+button {
   cursor: pointer;
   font-family: 'Anek Latin', sans-serif;
   font-size: 16px;
-  border-radius: 0;
-  border: 1px light-dark(var(--magenta), var(--pink));
-  border-style: none solid;
+  border-radius: 5px;
   color: light-dark(black, white);
   background-color: transparent;
   backdrop-filter: var(--highlight);
@@ -371,6 +370,13 @@ li:has(input:checked) {
   margin: 5px 0;
   line-height: inherit;
   height: 30px;
+  border: none;
+}
+
+#list-input-wrapper > button {
+  border-radius: 0;
+  border: 1px light-dark(var(--magenta), var(--pink));
+  border-style: none solid;
   &:first-of-type {
     border-radius: 5px 0 0 5px;
     border-style: none solid none none;
@@ -423,4 +429,39 @@ li:has(input:checked) {
   @media (prefers-color-scheme: dark) {
     --highlight: contrast(120%) brightness(240%);
   }
+}
+
+#list-tags-wrapper label {
+  user-select: none;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 20px;
+  color: light-dark(black, white);
+  background-color: transparent;
+  backdrop-filter: var(--highlight);
+  padding: 5px;
+  margin: 5px 0;
+  height: 20px;
+  border-radius: 0;
+  border: 1px light-dark(var(--magenta), var(--pink));
+  border-style: none solid;
+  &:first-of-type {
+    border-radius: 5px 0 0 5px;
+    border-style: none solid none none;
+  }
+  &:last-of-type {
+    border-radius: 0 5px 5px 0;
+    border-style: none none none solid;
+  }
+}
+
+#list-tags-wrapper label input[type="checkbox"] {
+  appearance: none;
+  margin: 0;
+}
+
+#list-tags-wrapper label:has(:checked) {
+  color: #808080;
+  backdrop-filter: brightness(80%);
 }

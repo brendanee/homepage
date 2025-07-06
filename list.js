@@ -16,6 +16,9 @@ async function init() {
   list = await readAll('list');
   console.log(list);
   drawList(list);
+  let tags = [];
+  list.map((e) => tags.push(...e.tags));
+  tags.forEach((e) => addListTag(e));
 }
 
 /**
@@ -73,4 +76,15 @@ async function deleteListItem(creation) {
   debugger
   list = list.filter((e) => (e.creation !== creation));
   drawList(list);
+}
+
+function addListTag(tag) {
+  const ele = document.createElement('label');
+  ele.innerHTML = '<input type="checkbox">#' + tag;
+  ele.addEventListener('click', filterListTo(tag), false);
+  document.getElementById('list-tags-wrapper').append(ele);
+}
+
+function filterListTo(tag) {
+  console.log('tag is ' + tag);
 }
