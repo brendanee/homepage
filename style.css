@@ -358,6 +358,7 @@ li:has(input:checked) {
 }
 
 #list-input-wrapper > button {
+  cursor: pointer;
   font-family: 'Anek Latin', sans-serif;
   font-size: 16px;
   border-radius: 0;
@@ -377,5 +378,49 @@ li:has(input:checked) {
   &:last-of-type {
     border-radius: 0 5px 5px 0;
     border-style: none none none solid;
+  }
+}
+
+#list-content li > * {
+  cursor: pointer;
+}
+
+.list-done:hover {
+  filter: brightness(125%);
+}
+
+.list-delete:hover {
+  filter: brightness(125%);
+}
+
+
+.list-important {
+  filter: grayscale(100%);
+
+  &:hover {
+    filter: grayscale(50%);
+  }
+}
+
+.important .list-important {
+  filter: grayscale(0)
+}
+
+.completed {
+  text-decoration: line-through;
+  color: #808080;
+}
+
+.due {
+  outline: 2px solid light-dark(var(--magenta), var(--pink));
+}
+
+.due, .important {
+  /*outline: 2px solid yellow;*/
+  @media (prefers-color-scheme: light) {
+    --highlight: contrast(155%) brightness(105%);
+  }
+  @media (prefers-color-scheme: dark) {
+    --highlight: contrast(120%) brightness(240%);
   }
 }
