@@ -1,9 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Anek+Latin");
 @import url("./reset.css");
 
-html {
-  --b-sunset: linear-gradient(135deg, rgb(204,129,8) 0%, var(--magenta) 100%) 2;
+:root {
+  color-scheme: light dark;
+
+  @media (prefers-color-scheme: light) {
+    --highlight: contrast(115%) brightness(105%);
+  }
+  @media (prefers-color-scheme: dark) {
+    --highlight: contrast(120%) brightness(170%);
+  }
 }
+
+
 
 header {
   width: 100%;
@@ -11,7 +20,7 @@ header {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--magenta) transparent;
+  scrollbar-color: light-dark(var(--magenta), var(--pink)) transparent;
 }
 
 body {
@@ -22,10 +31,14 @@ body {
   font-size: 18px;
   font-family: "Anek-Latin", sans-serif !important;
   justify-content: center;
-  color: white;
-  /*text-shadow: 0 0 0.3em black, 0 0 0.3em black;*/
+  color: light-dark(black, white);
   z-index: -999;
-  background-color: var(--off-purple);
+  @media (prefers-color-scheme: light) {
+    background: var(--gradient-light);
+  }
+  @media (prefers-color-scheme: dark) {
+    background: var(--gradient-dark);
+  }
 }
 
 .column {
@@ -43,7 +56,7 @@ body > blockquote {
 }
 
 a {
-  color: white;
+  color: light-dark(black, white);
   text-decoration: none;
 }
 
@@ -65,9 +78,7 @@ ul li {
   margin: 10px 0;
   padding: 5px;
   font-size: 18px;
-  backdrop-filter: contrast(150%);
-  -webkit-backdrop-filter: contrast(150%);
-  color: white;
+  backdrop-filter: var(--highlight);
   text-align: center;
   list-style-type: none;
   word-break: break-all;
@@ -84,7 +95,7 @@ input[type="text"] {
   width: 100%;
   font-size: 20px;
   border-style: solid;
-  border-image: linear-gradient(25deg, var(--pink) 0%, transparent 20px) 2;
+  border-image: linear-gradient(25deg, light-dark(var(--magenta), var(--pink)) 0%, transparent 20px) 2;
   /*border-image: linear-gradient(135deg, rgb(204,129,8) 0%, var(--magenta) 100%) 2;*/
 /*  border-color: var(--pink);*/
   color: white;
@@ -93,7 +104,7 @@ input[type="text"] {
 
 input[type="text"]:focus {
   outline: none;
-  border-image: linear-gradient(5deg, white 0%, transparent 25px) 2;
+  border-image: linear-gradient(5deg, light-dark(var(--dark-blue), white) 0%, transparent 25px) 2;
 }
 
 input[type="date"] {
@@ -106,7 +117,7 @@ input[type="date"] {
 
 input[type="text"]::placeholder {
   opacity: 0.55;
-  color: var(--pink);
+  color: light-dark(var(--magenta), var(--pink));
   background-clip: text;
   font-family: "Anek-Latin", sans-serif;
 }
@@ -174,9 +185,7 @@ white-space: nowrap;
   font-size: 15px;
   color: white;
   
-  backdrop-filter: brightness(150%);
-  -webkit-backdrop-filter: brightness(150%);
-  text-shadow: none;
+  backdrop-filter: var(--highlight);
 }
 
 .tag::before {
@@ -216,8 +225,7 @@ white-space: nowrap;
   margin: 2px;
   padding: 5px;
   font-size: 15px;
-  backdrop-filter: brightness(150%);
-  -webkit-backdrop-filter: brightness(150%);
+  backdrop-filter: var(--highlight);
   text-align: center;
   z-index: 99;
 }
@@ -260,10 +268,7 @@ white-space: nowrap;
 
 /* Doesn't work in Chrome <105 and iOS <16.4 ugh */
 li:has(input:checked) {
-  backdrop-filter: brightness(110%) contrast(150%) !important;
-  -webkit-backdrop-filter: brightness(110%) contrast(150%) !important;
   outline: 3px solid var(--magenta);
-  box-shadow: inset var(--magenta) 0 0 15px, var(--magenta) 0 0 30px !important;
 }
 
 #todo li img, li span input[type="checkbox"] {
@@ -276,8 +281,14 @@ li:has(input:checked) {
 #calendar {
   width: 100%;
   max-height: unset;
-  mix-blend-mode: plus-lighter;
+
   position: relative;
+  @media (prefers-color-scheme: light) {
+    mix-blend-mode: multiply;
+  }
+  @media (prefers-color-scheme: dark) {
+    mix-blend-mode: plus-lighter;
+  }
 }
 
 #calendar > iframe {
@@ -290,9 +301,13 @@ li:has(input:checked) {
   position: absolute;
   width: 100%;
   height: 450px;
-  backdrop-filter: invert(100%) hue-rotate(250deg) contrast(1.2);
-  -webkit-backdrop-filter: invert(100%) hue-rotate(250deg) contrast(1.2);
   pointer-events: none;
+  @media (prefers-color-scheme: light) {
+    backdrop-filter: hue-rotate(250deg) contrast(1.2);
+  }
+  @media (prefers-color-scheme: dark) {
+    backdrop-filter: invert(100%) hue-rotate(250deg) contrast(1.2);
+  }
 }
 
 /* BUBBLES */
@@ -304,8 +319,7 @@ li:has(input:checked) {
 
 .bubble {
   border-radius: 5px;
-  backdrop-filter: contrast(150%);
-  -webkit-backdrop-filter: contrast(150%);
+  backdrop-filter: var(--highlight);
   padding: 10px;
   height: 35px;
   max-width: 150px;
