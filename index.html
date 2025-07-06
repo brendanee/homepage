@@ -38,10 +38,14 @@
       <script type="module" src="./bubbles.js"></script>
     </div>
     <div id="list">
-      <input type="text" placeholder="Add to the todo list!" id="list-input">
-      <!-- JS silliness to goto current day, -->
-      <input type="date" id="list-date" onclick="this.value = (new Date).toISOString().split('T')[0]">
-      <!-- JS will fill in -->
+      <div id="list-input-wrapper">
+        <input type="text" placeholder="Add to the todo list!" id="list-input">
+        <button>Today</button><button>Tomorrow</button><button>あさって</button><button>Weeklong</button><button>Week</button><button>Month</button>
+        <!--<input type="date" id="list-date" onclick="this.value = (new Date).toISOString().split('T')[0]">-->
+      </div>
+      <div id="list-tags-wrapper"></div>
+      <ul id="list-content"></div>
+      <script type="module" src="./list.js"></script>
       <ul>
       </ul>
     </div>

@@ -1,6 +1,6 @@
 // Import various functions from Google's Firebase. You're supposed to do this via npm, but...
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, collection, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
 const firebaseConfig = {
@@ -63,10 +63,19 @@ async function write(collection, document, data) {
   await setDoc(docRef, data);
 }
 
+/**
+ * Delete specified document
+ * @param {String} collection Collection of doc to be deleted (list, bubbles, etc.)
+ * @param {String} documentID Document to delete (for list, timestamp)
+ */
+async function del(collection, documentID) {
+  await deleteDoc(doc(db, collection, documentID));
+}
+
 document.getElementById('sign-in').addEventListener('click', signIn, false);
 document.getElementById('sign-out').addEventListener('click', () => {
   signOut(auth).catch((error) => console.error(error));
   location.reload();
 }, false);
 
-export { read, readAll, write };
+export { read, readAll, write, del };

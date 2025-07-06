@@ -305,7 +305,7 @@ li:has(input:checked) {
 
 /* BUBBLES */
 #bubbles {
-  padding: 30px;
+  padding: 10px;
   max-height: 600px;
   overflow: auto
 }
@@ -336,4 +336,46 @@ li:has(input:checked) {
 
 #list-input, #list-date {
   display: block;
+}
+
+/* LIST */
+#list-content {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#list-content li {
+  flex: 1 0 auto;
+  margin: 0 5px 5px 0;
+}
+
+#list-content li span {
+  float: right;
+}
+
+#list-input-wrapper {
+  /*display: flex;*/
+}
+
+#list-input-wrapper > button {
+  font-family: 'Anek Latin', sans-serif;
+  font-size: 16px;
+  border-radius: 0;
+  border: 1px light-dark(var(--magenta), var(--pink));
+  border-style: none solid;
+  color: light-dark(black, white);
+  background-color: transparent;
+  backdrop-filter: var(--highlight);
+  padding: 5px;
+  margin: 5px 0;
+  line-height: inherit;
+  height: 30px;
+  &:first-of-type {
+    border-radius: 5px 0 0 5px;
+    border-style: none solid none none;
+  }
+  &:last-of-type {
+    border-radius: 0 5px 5px 0;
+    border-style: none none none solid;
+  }
 }
