@@ -36,6 +36,12 @@ function drawList(list) {
     // Due date minus now (nanoseconds) to ms to sec to min to hr
     const daysUntil = Math.floor((e.due - Date.now()) / 1000 / 60 / 60 / 24) + 1;
     switch (true) {
+      case daysUntil < -1:
+        ele.innerHTML = `<b>${daysUntil} days ago</b>`;
+        break;
+      case daysUntil === -1:
+        ele.innerHTML = `<b>Yesterday</b>`;
+        break;
       case daysUntil === 0:
         ele.innerHTML = `<b>Today</b>`;
         break;
@@ -62,7 +68,7 @@ function drawList(list) {
         ele.className = (e.important ? 'important' : '');
       }
     }
-    document.getElementById('list-content').append(ele);
+    document.getElementById('list-content').appendChild(ele);
     document.querySelector('#list-content > li:last-of-type > .list-delete').addEventListener('click', () => deleteListItem(e.creation), false);
   });
 }

@@ -8,19 +8,9 @@
   <link href="./style.css" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <p>Not Signed In</p>
-    <form>
-      <input type="email" name="email" autocomplete="email" id="email-input">
-      <input type="password" name="password" autocomplete="current-password" id="password-input">
-      <button type="button" id="sign-in">Sign In</button>
-    </form>
-
-    <button id="sign-out">Sign Out</button>
-
-  </header>
   <div class="column">
-    <div class="blur-box">
+    <!--
+    <div class="blur-box" style="display: none;">
       <div class="input-wrapper">
         <input id="search" autocomplete="off" type="text" placeholder="What's on your mind?" onkeyup="refreshSearch()">
         <input type="checkbox" name="Private" id="todo-private">
@@ -29,30 +19,38 @@
         <span class="tag">#tag</span>
         <span class="tag">#another-tag</span>
       </div>
-      <!-- #results is auto-populated from JS -->
       <ul id="search-results"></ul>
     </div>
-    <input id="bubbles-input" autocomplete="off" type="text" placeholder="Bubble discription...">
+    -->
+    <input id="bubbles-input" autocomplete="off" type="text" placeholder="Bubble description...">
     <div id="bubbles">
       <div class="bubble"><img src="./assets/plus.svg"></div>
       <script type="module" src="./bubbles.js"></script>
     </div>
+    <div id="sign-in-wrapper">
+      <span>Not Signed In</span>
+      <form>
+        <input type="email" name="email" autocomplete="email" id="email-input">
+        <input type="password" name="password" autocomplete="current-password" id="password-input">
+        <button type="button" id="sign-in">Sign In</button>
+      </form>
+      <button id="sign-out">Sign Out</button>
+    </div>
+  </div>
+
+  <div class="column">
     <div id="list">
       <div id="list-input-wrapper">
         <input type="text" placeholder="Add to the todo list!" id="list-input">
         <button>Today</button><button>Tomorrow</button><button>あさって</button><button>Weeklong</button><button>Week</button><button>Month</button>
-        <!--<input type="date" id="list-date" onclick="this.value = (new Date).toISOString().split('T')[0]">-->
       </div>
-      <div id="list-tags-wrapper"><label><input type="checkbox" name="tags-due">Due</label><label><input type="checkbox" name="tags-important">Important</label><label><input type="checkbox" name="tags-todo">Todo</label><label><input type="checkbox" name="tags-completed" checked>Completed</label></div>
-    <ul id="list-content"></div>
-    <script type="module" src="./list.js"></script>
-    <ul>
-    </ul>
-  </div>
-  </div>
-  <div class="column">
-    
+      <div id="list-tags-wrapper">
+        <label><input type="checkbox" name="tags-due">Due</label><label><input type="checkbox" name="tags-important">Important</label><label><input type="checkbox" name="tags-todo">Todo</label><label><input type="checkbox" name="tags-completed" checked>Completed</label></div> <!-- Load bearing lack of newline -->
+      <ul id="list-content">
+      <script type="module" src="./list.js"></script>
+    </div>
     <!-- JS will populate #classes div with classes when Firestore connects -->
+    <!--
     <div id="classes" style="display: none">
       <div>Calc<span onclick="cycleClasses(0);" oncontextmenu="resetClasses(0); return false;">X</span></div>
       <div>English<span onclick="cycleClasses(1);" oncontextmenu="resetClasses(1); return false;">X</span></div>
@@ -66,7 +64,7 @@
       <div>Sports<span onclick="cycleClasses(9);" oncontextmenu="resetClasses(9); return false;">X</span></div>
     </div>
     
-    <div class="blur-box">
+    <div class="blur-box" style="display: none">
       <script type="module" src="./todo.js"></script>
       <div class="input-wrapper">
         <input id="todo-input" autocomplete="off" type="text" placeholder="What should you do..." onkeyup="addToTodo(event)">
@@ -79,8 +77,8 @@
       </div>
       <ul id="todo"></ul>
     </div>
+  -->
   </div>
-  <div id="toast"></div>
   <div id="calendar">
     <iframe src="https://calendar.google.com/calendar/u/0/embed?height=600&wkst=1&ctz=America/Los_Angeles&showPrint=0&showTitle=0&showTz=0&showCalendars=0&showTabs=0&mode=WEEK&hl=en&src=YnJlbmRhbmVlMzE0QGdtYWlsLmNvbQ&src=ZmFtaWx5MTE2NTg4NDA5NDI0NjUxOTcyNzlAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=ZW4udXNhLm9mZmljaWFsI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=ZWVqb3NlcGhpbmUzMTRAZ21haWwuY29t&color=%23f3c7ff&color=%23009688&color=%23ffc4c4&color=%233f51b5"></iframe>
     <div id="cover"></div>

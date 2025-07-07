@@ -20,10 +20,10 @@ const auth = getAuth();
 // Bit like an event listener
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    document.querySelector('header > p').innerHTML = user.displayName;
+    document.querySelector('#sign-in-wrapper > span').innerHTML = user.displayName;
     document.getElementById('sign-out').style.display = 'inline-block';
     document.querySelector('form').style.display = 'none';
-    // Custom- so fancy! Listened for in every other module.
+    // Custom- so fancy! Listened for in every other module currently in use.
     document.dispatchEvent(new Event('firebasedone'));
   }
 })
