@@ -43,12 +43,12 @@
         <button>Today</button><button>Tomorrow</button><button>あさって</button><button>Weeklong</button><button>Week</button><button>Month</button>
         <!--<input type="date" id="list-date" onclick="this.value = (new Date).toISOString().split('T')[0]">-->
       </div>
-      <div id="list-tags-wrapper"><label><input type="checkbox">Due</label><label><input type="checkbox">Important</label><label><input type="checkbox">Todo</label><label><input type="checkbox" checked>Completed</label></div>
-      <ul id="list-content"></div>
-      <script type="module" src="./list.js"></script>
-      <ul>
-      </ul>
-    </div>
+      <div id="list-tags-wrapper"><label><input type="checkbox" name="tags-due">Due</label><label><input type="checkbox" name="tags-important">Important</label><label><input type="checkbox" name="tags-todo">Todo</label><label><input type="checkbox" name="tags-completed" checked>Completed</label></div>
+    <ul id="list-content"></div>
+    <script type="module" src="./list.js"></script>
+    <ul>
+    </ul>
+  </div>
   </div>
   <div class="column">
     
@@ -80,15 +80,11 @@
       <ul id="todo"></ul>
     </div>
   </div>
-  <div class="column">
-
-  </div>
   <div id="toast"></div>
-      <div id="calendar">
-        <iframe src="https://calendar.google.com/calendar/u/0/embed?height=600&wkst=1&ctz=America/Los_Angeles&showPrint=0&showTitle=0&showTz=0&showCalendars=0&showTabs=0&mode=WEEK&hl=en&src=YnJlbmRhbmVlMzE0QGdtYWlsLmNvbQ&src=ZmFtaWx5MTE2NTg4NDA5NDI0NjUxOTcyNzlAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=ZW4udXNhLm9mZmljaWFsI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=ZWVqb3NlcGhpbmUzMTRAZ21haWwuY29t&color=%23f3c7ff&color=%23009688&color=%23ffc4c4&color=%233f51b5"></iframe>
-      <div id="cover"></div>
-    </div>
-
+  <div id="calendar">
+    <iframe src="https://calendar.google.com/calendar/u/0/embed?height=600&wkst=1&ctz=America/Los_Angeles&showPrint=0&showTitle=0&showTz=0&showCalendars=0&showTabs=0&mode=WEEK&hl=en&src=YnJlbmRhbmVlMzE0QGdtYWlsLmNvbQ&src=ZmFtaWx5MTE2NTg4NDA5NDI0NjUxOTcyNzlAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=ZW4udXNhLm9mZmljaWFsI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=ZWVqb3NlcGhpbmUzMTRAZ21haWwuY29t&color=%23f3c7ff&color=%23009688&color=%23ffc4c4&color=%233f51b5"></iframe>
+    <div id="cover"></div>
+  </div>
   <script type="module" src="./main.js"></script>
   <script type="module" src="./search.js"></script>
 </body>

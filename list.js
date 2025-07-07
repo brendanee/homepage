@@ -16,6 +16,7 @@ async function init() {
   list = await readAll('list');
   console.log(list);
   drawList(list);
+  document.querySelectorAll('#list-tags-wrapper > label').forEach((e) => e.addEventListener('click', filterList, false))
   let tags = [];
   list.map((e) => tags.push(...e.tags));
   tags.forEach((e) => addListTag(e));
@@ -80,11 +81,19 @@ async function deleteListItem(creation) {
 
 function addListTag(tag) {
   const ele = document.createElement('label');
-  ele.innerHTML = '<input type="checkbox">#' + tag;
-  ele.addEventListener('click', filterListTo(tag), false);
+  ele.innerHTML = `<input type="checkbox" checked name="tags-${tag}">#${tag}`;
+  ele.addEventListener('click', filterList, false);
   document.getElementById('list-tags-wrapper').append(ele);
 }
 
-function filterListTo(tag) {
-  console.log('tag is ' + tag);
+function filterList() {
+  let checkedList = Array.from(document.querySelectorAll('#list-tags-wrapper > label > input')).map((e) => e.checked);
+  console.log(checkedList)
+  /*
+  if (document.querySelector(`#list-tags-wrapper > label > input[name=tags-${tag}]`).checked) {
+    drawList(list);
+  } else {
+    drawList(list.filter((e) => (e.tags.includes(tag))));
+  }
+    */
 }
