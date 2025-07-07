@@ -5,7 +5,7 @@
   color-scheme: light dark;
 
   @media (prefers-color-scheme: light) {
-    --highlight: contrast(115%) brightness(105%);
+    --highlight: hue-rotate(-10deg) brightness(95%) contrast(150%);
   }
   @media (prefers-color-scheme: dark) {
     --highlight: contrast(120%) brightness(170%);
@@ -172,25 +172,26 @@ white-space: nowrap;
   /**/}
 
 .tag {
+  padding: 2px 4px 1px 1px;
+  border-radius: 5px;
+  line-height: 16px;
   display: inline-block;
-  margin-right: 5px;
-  padding: 2px 5px 2px 11.5px;
-  font-size: 15px;
-  color: white;
-  
+  margin-left: 5px;
+  font-size: 15px;  
+  background-color: light-dark(#ffffff80, #00000040);
   backdrop-filter: var(--highlight);
+  border: 2px solid var(--off-black);
 }
 
 .tag::before {
+  color: white;
+  border-radius: 5px 0 0 5px;
   padding: 2px 5px;
   content: "#";
-  position: absolute;
-  background-color: var(--off-black);
-  top: 0;
-  left: 0;
-  /* Annoying magic number */
-  width: 10px;
+  background-color:  var(--off-black);
   text-align: center;
+  position: relative;
+  left: -2px;
 }
 
 .tag.selected::before {
@@ -349,7 +350,7 @@ li:has(input:checked) {
   margin: 0 5px 5px 0;
 }
 
-#list-content li span {
+#list-content li span:not(.tag) {
   float: right;
 }
 
@@ -462,6 +463,6 @@ button {
 }
 
 #list-tags-wrapper label:has(:checked) {
-  color: #808080;
+  color: light-dark(black, #808080);
   backdrop-filter: brightness(80%);
 }

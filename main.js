@@ -17,7 +17,6 @@ function parseTags(listID) {
   
   document.querySelectorAll(listID + ' li').forEach((element) => allTagsList = allTagsList.concat(element.querySelector('.tags-wrapper').innerText.replaceAll('#', ' ').split(' ')));
   allTagsList = removeDupes(allTagsList);
-console.log(allTagsList.indexOf(''));
   allTagsList.splice(allTagsList.indexOf(''), 1);    
   let temp = '';
   allTagsList.forEach((element) => (temp += `<span onclick="filterList(this, '${element}', '${listID}');" class="tag">#${element}</span>`))
