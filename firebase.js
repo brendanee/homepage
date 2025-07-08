@@ -59,8 +59,7 @@ async function readAll(col) {
 
 async function write(collection, document, data) {
   const docRef = doc(db, collection, document);
-  // Very jank, implements security holes
-  await setDoc(docRef, data);
+  await setDoc(docRef, data, { merge: true });
 }
 
 /**

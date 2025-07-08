@@ -44,6 +44,7 @@ body {
 .column {
   flex: 1 1 350px;
   height: 40vh; /* Account for padding */
+  overflow: auto;
 }
 
 a {
@@ -245,15 +246,14 @@ button {
 
 #list-input-wrapper > button {
   border-radius: 0;
-  border: 1px light-dark(var(--magenta), var(--pink));
-  border-style: none solid;
+  border: 2px light-dark(var(--magenta), var(--pink));
+  border-style: none solid none none;
   &:first-of-type {
     border-radius: 5px 0 0 5px;
-    border-style: none solid none none;
   }
   &:last-of-type {
     border-radius: 0 5px 5px 0;
-    border-style: none none none solid;
+    border-style: none;
   }
 }
 
@@ -314,15 +314,14 @@ button {
   margin: 5px 0;
   height: 20px;
   border-radius: 0;
-  border: 1px light-dark(var(--magenta), var(--pink));
-  border-style: none solid;
+  border: 2px light-dark(var(--magenta), var(--pink));
+  border-style: none solid none none;
   &:first-of-type {
     border-radius: 5px 0 0 5px;
-    border-style: none solid none none;
   }
   &:last-of-type {
     border-radius: 0 5px 5px 0;
-    border-style: none none none solid;
+    border-style: none;
   }
 }
 
@@ -334,4 +333,24 @@ button {
 #list-tags-wrapper label:has(:checked) {
   color: light-dark(var(--off-black), #808080);
   backdrop-filter: brightness(80%);
+}
+
+.confetti {
+  position: absolute;
+  top: var(--x);
+  left: var(--y);
+  animation: confetti 1.25s ease-out;
+}
+
+@keyframes confetti {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    top: var(--endY);
+    left: var(--endX);
+    transform: rotate(var(--endRot));
+  }
 }

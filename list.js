@@ -1,6 +1,9 @@
 import { read, readAll, write, del } from "./firebase.js";
 
 let list = [];
+let tags = [];
+
+function deDupe(array) {return Array.from(new Set(array));}
 
 async function init() {
   const today = new Date;
@@ -12,24 +15,25 @@ async function init() {
     7, // Seven days
     (new Date(today.getFullYear(), today.getMonth() - 1, 0)).getDate() - today.getDate() // End of the current month minus today (scuffed)
   ]
+  // These two lines attach eventListeners to already-there buttons (generated ones are attached on creation)
   document.querySelectorAll('#list-input-wrapper > button').forEach((e, i) => e.addEventListener('click', () => addListItem(btnDayTimes[i]), false));
-  list = await readAll('list');
-  console.log(list);
-  drawList(list);
   document.querySelectorAll('#list-tags-wrapper > label').forEach((e) => e.addEventListener('click', filterList, false))
-  let tags = [];
-  list.map((e) => tags.push(...e.tags));
+  list = await readAll('list');
+  list.forEach((e) => tags.push(...e.tags));
   tags = deDupe(tags);
   tags.forEach((e) => addListTag(e));
   filterList();
 }
 
 /**
- * 
+ * DO NOT CALL ME CALL filterList()
  * @param {Array} list List of items to draw to the screen
  */
 function drawList(list) {
+  // Sort by due date, push important forward, push done back
   list.sort((a, b) => a.due - b.due);
+  list.sort((a, b) => b.important - a.important);
+  list.sort((a, b) => a.completed - b.completed);
   document.getElementById('list-content').innerHTML = '';
   list.forEach((e) => {
     const ele = document.createElement('li');
@@ -37,25 +41,25 @@ function drawList(list) {
     const daysUntil = Math.floor((e.due - Date.now()) / 1000 / 60 / 60 / 24) + 1;
     switch (true) {
       case daysUntil < -1:
-        ele.innerHTML = `<b>${daysUntil} days ago</b>`;
+        ele.innerHTML = `<b>${daysUntil} days ago</b> `;
         break;
       case daysUntil === -1:
-        ele.innerHTML = `<b>Yesterday</b>`;
+        ele.innerHTML = `<b>Yesterday</b> `;
         break;
       case daysUntil === 0:
-        ele.innerHTML = `<b>Today</b>`;
+        ele.innerHTML = `<b>Today</b> `;
         break;
       case daysUntil === 1:
-        ele.innerHTML = `<b>Tmrw</b>`;
+        ele.innerHTML = `<b>Tmrw</b> `;
         break;
       case daysUntil > 7:
-        ele.innerHTML = `<b>Month</b>`;
+        ele.innerHTML = `<b>Month</b> `;
         break;
       default:
-        ele.innerHTML = `<b>${daysUntil} days</b>`;
+        ele.innerHTML = `<b>${daysUntil} days</b> `;
         break;
     }
-    ele.innerHTML += ` ${e.value}`;
+    ele.innerHTML += e.value;
     e.tags.forEach((e) => ele.innerHTML += `<span class="tag">${e}</span>`);
     if (e.completed) {
       ele.innerHTML += '<span class="list-delete">🗑️</span>';
@@ -63,17 +67,19 @@ function drawList(list) {
     } else {
       ele.innerHTML += '<span class="list-done">✅</span><span class="list-important">📌</span><span class="list-delete">🗑️</span>';
       if (daysUntil < 1) {
-        ele.className = 'due';
+        ele.className = 'due' + (e.important ? ' important' : '');
       } else {
         ele.className = (e.important ? 'important' : '');
       }
     }
     document.getElementById('list-content').appendChild(ele);
+    // Makes buttons work- ?. is if it doesn't exist (completed)
     document.querySelector('#list-content > li:last-of-type > .list-delete').addEventListener('click', () => deleteListItem(e.creation), false);
+    document.querySelector('#list-content > li:last-of-type > .list-done')?.addEventListener('click', (event) => completeListItem(e.creation, event), false);
+    document.querySelector('#list-content > li:last-of-type > .list-important')?.addEventListener('click', () => importantListItem(e.creation), false);
   });
-}
 
-document.addEventListener('firebasedone', init, false);
+}
 
 async function addListItem(dueDate) {
   const input = document.getElementById('list-input');
@@ -84,7 +90,7 @@ async function addListItem(dueDate) {
   const item = {
     completed: false, //TODO
     creation: today,
-    due: today + dueDate * 24 * 60 * 60 * 1000, // Hr to min to sec to mc
+    due: today + (dueDate * 24 * 60 * 60 * 1000), // Hr to min to sec to mc
     important: false, //TODO
     tags: hashtagSplit,
     value: value,
@@ -92,18 +98,12 @@ async function addListItem(dueDate) {
   write('list', "" + today, item);
   input.value = '';
   list.push(item);
-  drawList(list);
-}
-
-function deDupe(array) {
-  return Array.from(new Set(array));
-}
-
-async function deleteListItem(creation) {
-  await del('list', "" + creation);
-  debugger
-  list = list.filter((e) => (e.creation !== creation));
-  drawList(list);
+  if (deDupe(tags.concat(...hashtagSplit)).length !== tags.length) {
+    hashtagSplit.forEach((e) => addListTag(e));
+    tags.push(...hashtagSplit);
+    deDupe(tags);
+  }
+  filterList()
 }
 
 function addListTag(tag) {
@@ -139,4 +139,55 @@ function filterList() {
     }
   }
   drawList(newList);
+}
+
+async function deleteListItem(creation) {
+  await del('list', String(creation));
+  list = list.filter((e) => (e.creation !== creation));
+  filterList()
+}
+
+async function completeListItem(creation, event) {
+  await write('list', String(creation), { completed: true });
+  list.find((e) => e.creation === creation).completed = true;
+  filterList();
+  console.log(event.clientX, event.clientY)
+  createConfetti(event.clientX, event.clientY);
+}
+
+async function importantListItem(creation) {
+  let listItem = list.find((e) => e.creation === creation);
+  listItem.important = !listItem.important;
+  console.log(listItem)
+  await write('list', String(creation), { important: listItem.important });
+  filterList();
+}
+window.createConfetti = createConfetti;
+function createConfetti(x, y) {
+  for (let i = 0; i < 200; i++) {
+    const ele = document.createElement('div');
+    ele.className = 'confetti';
+    ele.style = `
+      --endX: ${x + rand(-200, 200)}px;
+      --endY: ${y + rand(-200, 200)}px;
+      --endRot: ${rand(-180, 180)}deg;
+      top: ${y + rand(-20, 20)}px;
+      left: ${x + rand(-20, 20)}px;
+      background-color: hsl(${rand(0, 360)} ${rand(50, 100)} ${rand(30, 100)});
+      width: ${rand(5,15)}px;
+      height: ${rand(10,25)}px;
+      transform: rotate(${rand(45, -45)}deg);`;
+    document.querySelector('body').append(ele);
+  }
+
+  window.setTimeout(() => {
+    document.querySelectorAll('.confetti').forEach((e) => e.remove());
+  }, 1000);
+}
+
+document.addEventListener('firebasedone', init, false);
+
+//from mdn
+function rand(from, to) {
+  return Math.floor(Math.random() * (to - from)) + from;
 }
