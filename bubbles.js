@@ -1,22 +1,20 @@
 import { read, readAll, write } from "./firebase.js";
 let bubbles = [];
 
-function createNew(clip) {
-  // If there's no clipboard text, get it, then recurse
-  if (clip === undefined) {
-    navigator.clipboard.readText().then((clipText) => {createNew(clipText)});
-  } else {
+function createNew() {
+  // Get clipboard text *then* run rest
+  navigator.clipboard.readText().then((clipboardText) => {
     // Force string
-    let curIndex = document.querySelector('#bubbles').childElementCount - 2 + "";
+    let curIndex = String(document.querySelector('#bubbles').childElementCount - 2);
     // Prepend http
-    if (clip.substring(0, 4) !== 'http') {
-      clip = 'https://' + clip;
+    if (clipboardText.substring(0, 4) !== 'http') {
+      clipboardText = 'https://' + clipboardText;
     }
-    const title = document.getElementById('bubbles-input').value
-    write('bubbles', curIndex, {link: clip, title: title});
-    bubbles.push({link: clip, title: title});
+    const title = document.getElementById('bubbles-input').value;
+    write('bubbles', curIndex, {link: clipboardText, title: title});
+    bubbles.push({link: clipboardText, title: title});
     renderBubble(bubbles.length - 1);
-  }
+  });
 }
 
 // Prepends bubbles
