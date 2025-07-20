@@ -2,6 +2,7 @@
 @import url("./reset.css");
 
 :root {
+  scrollbar-gutter: auto;
   color-scheme: light dark;
 
   @media (prefers-color-scheme: light) {
@@ -41,12 +42,15 @@ body {
   }
 }
 
-.column {
-  flex: 1 1 350px;
-  height: 40vh; /* Account for padding */
-  overflow: auto;
+#column-one {
+  flex: 2 2 500px;
+  height: 100vh;
 }
 
+#column-two {
+  flex: 1 1 350px;
+  height: 100vh;
+}
 a {
   color: light-dark(var(--off-black), white);
   text-decoration: none;
@@ -171,7 +175,7 @@ input[type="text"]::placeholder {
     backdrop-filter: hue-rotate(50deg) contrast(1.2);
   }
   @media (prefers-color-scheme: dark) {
-    backdrop-filter: invert(100%) hue-rotate(250deg) contrast(1.2);
+    backdrop-filter: invert(100%) hue-rotate(300deg) contrast(1.2);
   }
 }
 
