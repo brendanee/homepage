@@ -29,7 +29,7 @@ body {
   flex-wrap: wrap;
   margin: 0;
   font-size: 18px;
-  overflow-y: hidden;
+  /*overflow-y: hidden;*/
   font-family: "Anek-Latin", sans-serif !important;
   justify-content: center;
   color: light-dark(var(--off-black), white);
@@ -50,7 +50,9 @@ body {
 #column-two {
   flex: 1 1 350px;
   height: 100vh;
+  overflow: auto;
 }
+
 a {
   color: light-dark(var(--off-black), white);
   text-decoration: none;
@@ -222,16 +224,13 @@ input[type="text"]::placeholder {
 
 #list-content li {
   flex: 1 0 auto;
+  width: calc(100% - 25px);
   margin: 0 5px 5px 0;
 }
 
 #list-content li span:not(.tag) {
   float: right;
-}
-
-#list-input-wrapper {
-  /*display: flex;*/
-}
+} 
 
 button {
   cursor: pointer;

@@ -2,11 +2,15 @@ import { read, readAll, write, del } from "./firebase.js";
 
 let list = [];
 let tags = [];
-
+// hr * min * sec * ms
+const dayInMs = 24 * 60 * 60 * 1000;
+/**
+ * Date object to nearest day, offset by current timezone
+ */
+const today = new Date(Date.now() - (Date.now() % (dayInMs)) + ((new Date).getTimezoneOffset() * 60 * 1000));
 function deDupe(array) {return Array.from(new Set(array));}
 
 async function init() {
-  const today = new Date;
   const btnDayTimes = [
     0, // Today
     1, // Tmrw
@@ -38,10 +42,10 @@ function drawList(list) {
   list.forEach((e) => {
     const ele = document.createElement('li');
     // Due date minus now (nanoseconds) to ms to sec to min to hr
-    const daysUntil = Math.floor((e.due - Date.now()) / 1000 / 60 / 60 / 24) + 1;
+    const daysUntil = Math.floor((e.due - today) / 1000 / 60 / 60 / 24);
     switch (true) {
       case daysUntil < -1:
-        ele.innerHTML = `<b>${daysUntil} days ago</b> `;
+        ele.innerHTML = `<b>${Math.abs(daysUntil)} days ago</b> `;
         break;
       case daysUntil === -1:
         ele.innerHTML = `<b>Yesterday</b> `;
@@ -73,29 +77,27 @@ function drawList(list) {
       }
     }
     document.getElementById('list-content').appendChild(ele);
-    // Makes buttons work- ?. is if it doesn't exist (completed)
+    // Makes buttons work- ?. is if it doesn't exist (for completed elements)
     document.querySelector('#list-content > li:last-of-type > .list-delete').addEventListener('click', () => deleteListItem(e.creation), false);
     document.querySelector('#list-content > li:last-of-type > .list-done')?.addEventListener('click', (event) => completeListItem(e.creation, event), false);
     document.querySelector('#list-content > li:last-of-type > .list-important')?.addEventListener('click', () => importantListItem(e.creation), false);
   });
-
 }
 
 async function addListItem(dueDate) {
   const input = document.getElementById('list-input');
   if (!input.value) {return;}
-  const today = Date.now();
   const hashtagSplit = input.value.split(' #')
   const value = hashtagSplit.shift();
   const item = {
-    completed: false, //TODO
-    creation: today,
-    due: today + (dueDate * 24 * 60 * 60 * 1000), // Hr to min to sec to mc
-    important: false, //TODO
+    completed: false,
+    creation: Date.now(),
+    due: today.valueOf() + (dueDate * dayInMs), // Hr to min to sec to mc
+    important: false,
     tags: hashtagSplit,
     value: value,
   }
-  write('list', "" + today, item);
+  write('list', String(Date.now()), item);
   input.value = '';
   list.push(item);
   if (deDupe(tags.concat(...hashtagSplit)).length !== tags.length) {
@@ -119,7 +121,7 @@ function filterList() {
 
   if (checkedList[0]) {
     // Filter to not due today
-    newList = newList.filter((e) => (Math.floor((e.due - Date.now()) / 1000 / 60 / 60 / 24) + 1 >= 1));
+    newList = newList.filter((e) => (Math.floor((e.due - today) / 1000 / 60 / 60 / 24) + 1 >= 1));
   }
   if (checkedList[1]) {
     // Filter to not important
@@ -127,7 +129,7 @@ function filterList() {
   }
   if (checkedList[2]) {
     // Filter to those who are not important or due today
-    newList = newList.filter((e) => (Math.floor((e.due - Date.now()) / 1000 / 60 / 60 / 24) + 1 < 1) || e.important);
+    newList = newList.filter((e) => (Math.floor((e.due - today) / 1000 / 60 / 60 / 24) + 1 < 1) || e.important);
   }
   if (checkedList[3]) {
     newList = newList.filter((e) => !e.completed);
@@ -144,25 +146,24 @@ function filterList() {
 async function deleteListItem(creation) {
   await del('list', String(creation));
   list = list.filter((e) => (e.creation !== creation));
-  filterList()
+  filterList();
 }
 
 async function completeListItem(creation, event) {
-  await write('list', String(creation), { completed: true });
+  // Completed items are sorted based on exact completion time reverse chron (hence due being negative)
+  await write('list', String(creation), { completed: true, important: false, due: -1 * Date.now()});
   list.find((e) => e.creation === creation).completed = true;
   filterList();
-  console.log(event.clientX, event.clientY)
   createConfetti(event.clientX, event.clientY);
 }
 
 async function importantListItem(creation) {
   let listItem = list.find((e) => e.creation === creation);
   listItem.important = !listItem.important;
-  console.log(listItem)
   await write('list', String(creation), { important: listItem.important });
   filterList();
 }
-window.createConfetti = createConfetti;
+
 function createConfetti(x, y) {
   for (let i = 0; i < 200; i++) {
     const ele = document.createElement('div');
