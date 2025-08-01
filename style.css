@@ -185,7 +185,7 @@ input[type="text"]::placeholder {
 #bubbles {
   padding: 10px;
   max-height: 600px;
-  overflow: auto
+  overflow: auto;
 }
 
 .bubble {
@@ -198,9 +198,11 @@ input[type="text"]::placeholder {
   float: left;
   display: flex;
 }
+
 .bubble img {
   width: 35px;
   height: 35px;
+  cursor: pointer;
 }
 
 .bubble > p {

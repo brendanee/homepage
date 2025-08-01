@@ -44,6 +44,10 @@ function drawList(list) {
     // Due date minus now (nanoseconds) to ms to sec to min to hr
     const daysUntil = Math.floor((e.due - today) / 1000 / 60 / 60 / 24);
     switch (true) {
+      // Completed don't show due date (it's negative gazillion for ordering)
+      case e.completed === true:
+        ele.innerHTML = ``;
+        break;
       case daysUntil < -1:
         ele.innerHTML = `<b>${Math.abs(daysUntil)} days ago</b> `;
         break;
@@ -192,3 +196,4 @@ document.addEventListener('firebasedone', init, false);
 function rand(from, to) {
   return Math.floor(Math.random() * (to - from)) + from;
 }
+
