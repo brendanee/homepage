@@ -54,8 +54,11 @@ body {
 }
 
 a {
-  color: light-dark(var(--off-black), white);
-  text-decoration: none;
+  color: light-dark(var(--magenta), var(--pink));
+}
+
+a:hover {
+  text-decoration-color: light-dark(var(--pink), var(--magenta));
 }
 
 ul {
@@ -197,6 +200,8 @@ input[type="text"]::placeholder {
   margin: 5px;
   float: left;
   display: flex;
+  color: light-dark(var(--off-black), white);
+  text-decoration: none;
 }
 
 .bubble img {
