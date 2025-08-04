@@ -101,14 +101,21 @@ async function addListItem(dueDate) {
     tags: hashtagSplit,
     value: value,
   }
+
+  if (value.includes('http')) {
+    item.value = `<a href="${value}">${value}</a>`
+  }
+
   write('list', String(Date.now()), item);
-  input.value = '';
   list.push(item);
+  // Add new tags to menu bar
   if (deDupe(tags.concat(...hashtagSplit)).length !== tags.length) {
     hashtagSplit.forEach((e) => addListTag(e));
     tags.push(...hashtagSplit);
     deDupe(tags);
   }
+
+  input.value = '';
   filterList()
 }
 
