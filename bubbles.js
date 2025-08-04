@@ -11,9 +11,8 @@ function createNew() {
       clipboardText = 'https://' + clipboardText;
     }
     const title = document.getElementById('bubbles-input').value;
-    debugger;
-    write('bubbles', title, {link: clipboardText, title: title});
-    bubbles.push({link: clipboardText, title: title});
+    write('bubbles', String(Date.now()), {link: clipboardText, title: title, id: Date.now()});
+    bubbles.push({link: clipboardText, title: title, id: Date.now()});
     renderBubble(bubbles.length - 1);
   });
 }
@@ -25,7 +24,7 @@ function renderBubble(index) {
   ele.setAttribute('class', 'bubble');
   ele.setAttribute('href', bubble.link);
   ele.innerHTML = `<img src="https://www.google.com/s2/favicons?sz=32&domain=${bubble.link}"><p>${bubble.title}</p>`;
-  ele.addEventListener('oncontextmenu', del('bubbles', bubble.title), false);
+  ele.addEventListener('contextmenu', (e) => {e.preventDefault(); del('bubbles', String(bubble.id)); e.currentTarget.remove()}, false);
   document.getElementById('bubbles').prepend(ele);
 }
 
