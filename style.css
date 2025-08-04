@@ -42,14 +42,17 @@ body {
   }
 }
 
+#column-one, #column-two {
+  padding: 5px;
+  height: calc(100vh - 10px); /* For padding */
+}
+
 #column-one {
   flex: 2 2 500px;
-  height: 100vh;
 }
 
 #column-two {
   flex: 1 1 350px;
-  height: 100vh;
   overflow: auto;
 }
 
@@ -186,7 +189,7 @@ input[type="text"]::placeholder {
 
 /* BUBBLES */
 #bubbles {
-  padding: 10px;
+  padding: 5px;
   max-height: 600px;
   overflow: auto;
 }
@@ -213,10 +216,6 @@ input[type="text"]::placeholder {
 .bubble > p {
   margin: auto auto auto 5px;
   width: fit-content;
-}
-
-#list {
-  padding: 5px;
 }
 
 #list-input, #list-date {
