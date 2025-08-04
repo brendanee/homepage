@@ -1,4 +1,4 @@
-import { read, readAll, write } from "./firebase.js";
+import { readAll, write, del } from "./firebase.js";
 let bubbles = [];
 
 function createNew() {
@@ -11,7 +11,8 @@ function createNew() {
       clipboardText = 'https://' + clipboardText;
     }
     const title = document.getElementById('bubbles-input').value;
-    write('bubbles', curIndex, {link: clipboardText, title: title});
+    debugger;
+    write('bubbles', title, {link: clipboardText, title: title});
     bubbles.push({link: clipboardText, title: title});
     renderBubble(bubbles.length - 1);
   });
@@ -23,7 +24,8 @@ function renderBubble(index) {
   const ele = document.createElement('a');
   ele.setAttribute('class', 'bubble');
   ele.setAttribute('href', bubble.link);
-  ele.innerHTML = `<img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${bubble.link}&size=64"><p>${bubble.title}</p>`;
+  ele.innerHTML = `<img src="https://www.google.com/s2/favicons?sz=32&domain=${bubble.link}"><p>${bubble.title}</p>`;
+  ele.addEventListener('oncontextmenu', del('bubbles', bubble.title), false);
   document.getElementById('bubbles').prepend(ele);
 }
 
@@ -31,4 +33,5 @@ document.addEventListener('firebasedone', async () => {
   document.querySelector('div.bubble').addEventListener('click', createNew, false);
   bubbles = await readAll('bubbles');
   bubbles.forEach((e, i) => renderBubble(i))
+  console.log(bubbles)
 }, false)
