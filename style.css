@@ -29,7 +29,7 @@ body {
   flex-wrap: wrap;
   margin: 0;
   font-size: 18px;
-  /*overflow-y: hidden;*/
+  overflow-x: hidden;
   font-family: "Anek-Latin", sans-serif !important;
   justify-content: center;
   color: light-dark(var(--off-black), white);

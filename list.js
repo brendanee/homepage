@@ -93,9 +93,11 @@ async function addListItem(dueDate) {
   if (!input.value) {return;}
   const hashtagSplit = input.value.split(' #')
   const value = hashtagSplit.shift();
+  // Needed as using Date.now() in multiple places can be off by miliseconds - kinda cool!
+  const rightNow = Date.now();
   const item = {
     completed: false,
-    creation: Date.now(),
+    creation: rightNow,
     due: today.valueOf() + (dueDate * dayInMs), // Hr to min to sec to mc
     important: false,
     tags: hashtagSplit,
@@ -106,7 +108,7 @@ async function addListItem(dueDate) {
     item.value = `<a href="${value}">${value}</a>`
   }
 
-  write('list', String(Date.now()), item);
+  write('list', String(rightNow), item);
   list.push(item);
   // Add new tags to menu bar
   if (deDupe(tags.concat(...hashtagSplit)).length !== tags.length) {
@@ -162,7 +164,7 @@ async function deleteListItem(creation) {
 
 async function completeListItem(creation, event) {
   // Completed items are sorted based on exact completion time reverse chron (hence due being negative)
-  await write('list', String(creation), { completed: true, important: false, due: -1 * Date.now()});
+  await write('list', String(creation), { completed: true, important: false, due: -1 * Date.now(), tags: []});
   list.find((e) => e.creation === creation).completed = true;
   filterList();
   createConfetti(event.clientX, event.clientY);
@@ -191,7 +193,6 @@ function createConfetti(x, y) {
       transform: rotate(${rand(45, -45)}deg);`;
     document.querySelector('body').append(ele);
   }
-
   window.setTimeout(() => {
     document.querySelectorAll('.confetti').forEach((e) => e.remove());
   }, 1000);
