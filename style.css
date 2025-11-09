@@ -77,6 +77,10 @@ header {
   display: none;
 }
 
+#sign-in-tagline {
+  font-size: 24px;
+}
+
 /* Each individual results styling */
 ul li {
   margin: 5px 0;
@@ -157,7 +161,7 @@ input[type="text"]::placeholder {
 /* CLASS TIMES */
 #calendar {
   width: 100%;
-  height: 60vh;
+  height: calc(100vh - 10px - 300px);
 
   position: relative;
   @media (prefers-color-scheme: light) {
@@ -266,7 +270,8 @@ button {
   }
 }
 
-#list-content li > * {
+/* Hover effect for icons */
+#list-content li > span {
   cursor: pointer;
 }
 

@@ -200,8 +200,7 @@ function createConfetti(x, y) {
 
 document.addEventListener('firebasedone', init, false);
 
-//from mdn
+// Rand function from MDN
 function rand(from, to) {
   return Math.floor(Math.random() * (to - from)) + from;
 }
-
