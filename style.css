@@ -13,12 +13,6 @@
   }
 }
 
-
-
-header {
-  width: 100%;
-}
-
 * {
   scrollbar-width: thin;
   scrollbar-color: light-dark(var(--magenta), var(--pink)) transparent;
@@ -29,11 +23,9 @@ body {
   flex-wrap: wrap;
   margin: 0;
   font-size: 18px;
-  overflow-x: hidden;
   font-family: "Anek-Latin", sans-serif !important;
   justify-content: center;
   color: light-dark(var(--off-black), white);
-  z-index: -999;
   @media (prefers-color-scheme: light) {
     background: var(--gradient-light);
   }
@@ -69,10 +61,6 @@ ul {
   padding: 0;
 }
 
-header {
-  display: flex;
-}
-
 #sign-out {
   display: none;
 }
@@ -93,42 +81,29 @@ ul li {
   line-height: 26px;
 }
 
-/* Fancy sibling selector for search result hashtags*/
-/*
-ul li a ~ span {
-  color: var(--blue);
-}
-*/
-input[type="text"] {
+input[type="text"], input[type="email"], input[type="password"] {
   display: block;
   width: calc(100% - 4px);
   font-size: 20px;
   border-style: solid;
   border-image: linear-gradient(25deg, light-dark(var(--magenta), var(--pink)) 0%, transparent 20px) 2;
   background-color: transparent;
+
+  &::placeholder {
+    opacity: 0.55;
+    color: light-dark(var(--magenta), var(--pink));
+    background-clip: text;
+  }
+
+  &:focus {
+    outline: none;
+    border-image: linear-gradient(5deg, light-dark(var(--dark-blue), white) 0%, transparent 25px) 2;
+  }
 }
 
-input[type="text"]:focus {
-  outline: none;
-  border-image: linear-gradient(5deg, light-dark(var(--dark-blue), white) 0%, transparent 25px) 2;
-}
-
-input[type="text"]::placeholder {
-  opacity: 0.55;
-  color: light-dark(var(--magenta), var(--pink));
-  background-clip: text;
-}
-
-#background-image {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  padding: 0;
-  filter: brightness(60%) contrast(125%);
-  /* Needed otherwise image gets stuffed on top? */
-  z-index: -1;
-  display: none;
+input[type="email"], input[type="password"] {
+  display: inline-block;
+  max-width: 150px;
 }
 
 .tag {
@@ -154,11 +129,6 @@ input[type="text"]::placeholder {
   left: -2px;
 }
 
-.tag.selected::before {
-  background-color: var(--magenta);
-}
-
-/* CLASS TIMES */
 #calendar {
   width: 100%;
   height: calc(100vh - 10px - 300px);
@@ -176,6 +146,7 @@ input[type="text"]::placeholder {
   width: 100%;
   height: 100%;
 }
+
 #calendar > #cover {
   top: 0;
   left: 0;
@@ -220,10 +191,6 @@ input[type="text"]::placeholder {
 .bubble > p {
   margin: auto auto auto 5px;
   width: fit-content;
-}
-
-#list-input, #list-date {
-  display: block;
 }
 
 /* LIST */

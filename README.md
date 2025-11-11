@@ -4,10 +4,10 @@ My personal "homepage," although the name's a bit of a misnomer- it's currently 
 ## Features
 - Dark mode!!
 - Basic Firebase auth
-- Todo list with filters and importance marking (the pin icon)
-- Good-looking Google calender embed (`mix-blend-mode` for the win)
-- Quicklinks to common websites
+- Todo list with filters and importance marking (the pin icon), a confetti animation, and deletion
+- Good-looking Google calender embed (`mix-blend-mode` for the win, makes background look nice)
+- Quicklinks to my commonly used websites
 - ✨Cloud✨ synchronization, by way of a scuffed Firestore thing
 # Quickstart
 Just for me honestly. _You don't want to use this_, it works not well.
-That being said, the Firestore has collections named `bubbles` and `list`, and uses a timestamp for each document's name.
+That being said, the Firestore database has collections named `bubbles` and `list`, and uses a timestamp for each document's name.

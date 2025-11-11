@@ -9,24 +9,11 @@
 </head>
 <body>
   <div id="column-one">
-    <!--
-    <div class="blur-box" style="display: none;">
-      <div class="input-wrapper">
-        <input id="search" autocomplete="off" type="text" placeholder="What's on your mind?" onkeyup="refreshSearch()">
-        <input type="checkbox" name="Private" id="todo-private">
-      </div>
-      <div class="tags-wrapper">
-        <span class="tag">#tag</span>
-        <span class="tag">#another-tag</span>
-      </div>
-      <ul id="search-results"></ul>
-    </div>
-    -->
     <div id="sign-in-wrapper">
       <span id="sign-in-tagline">Not Signed In <a href="./assets/screenshot.png">View Screenshot</a> <a href="https://github.com/brendanee/homepage">Github for Project</a></span>
       <form>
-        <input type="email" name="email" autocomplete="email" id="email-input">
-        <input type="password" name="password" autocomplete="current-password" id="password-input">
+        <input type="email" name="email" autocomplete="email" id="email-input" placeholder="Email...">
+        <input type="password" name="password" autocomplete="current-password" id="password-input" placeholder="Password...">
         <button type="button" id="sign-in">Sign In</button>
       </form>
       <button id="sign-out">Sign Out</button>
@@ -37,7 +24,7 @@
       <script type="module" src="./bubbles.js"></script>
     </div>
     <div id="calendar">
-      <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&showPrint=0&showTitle=0&showCalendars=0&showTz=0&mode=WEEK&src=YnJlbmRhbmVlMzE0QGdtYWlsLmNvbQ&src=ZmFtaWx5MTE2NTg4NDA5NDI0NjUxOTcyNzlAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=ZWVqb3NlcGhpbmUzMTRAZ21haWwuY29t&src=d2luZ2VybG9yZXRAZ21haWwuY29t&src=MTQxNGI2NDA4NDViNGE3YTc0NWFlYzJmNzY1ZWVmZGRmMjYxMTY4YjJjOWRlMGQwMjlkOWM2ODdjMmUxZTY2N0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=MWo4cDNsNGtyMWluNjZkZjc0YTRsbW1icGkwdXJtZThAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&src=MjI2dDJtM21qMzM5dWVsZDc5YjNiNHR1a2g0YWpxdHVAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&src=ZW4udXNhLm9mZmljaWFsI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=Y18zcDlxcnYzZzB2Mmk0M2xnajljdDdoODlra0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23a1ffe7&color=%23deff22&color=%23b3dcff&color=%23ffb4b4&color=%23ff8bdc&color=%23ffb453&color=%23ffffff&color=%23edfff2&color=%23c0ca33"></iframe>
+      <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&showPrint=0&showTitle=0&showCalendars=0&showTz=0&mode=WEEK&src=YnJlbmRhbmVlMzE0QGdtYWlsLmNvbQ&src=ZmFtaWx5MTE2NTg4NDA5NDI0NjUxOTcyNzlAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=ZWVqb3NlcGhpbmUzMTRAZ21haWwuY29t&src=d2luZ2VybG9yZXRAZ21haWwuY29t&src=MTQxNGI2NDA4NDViNGE3YTc0NWFlYzJmNzY1ZWVmZGRmMjYxMTY4YjJjOWRlMGQwMjlkOWM2ODdjMmUxZTY2N0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=MWo4cDNsNGtyMWluNjZkZjc0YTRsbW1icGkwdXJtZThAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&src=MjI2dDJtM21qMzM5dWVsZDc5YjNiNHR1a2g0YWpxdHVAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&src=ZW4udXNhLm9mZmljaWFsI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23a1ffe7&color=%23deff22&color=%23b3dcff&color=%23ffb4b4&color=%23ff8bdc&color=%23ffb453&color=%23ffffff&color=%23edfff2"></iframe>
       <div id="cover"></div>
     </div>
   </div>
@@ -52,35 +39,6 @@
       <ul id="list-content">
       <script type="module" src="./list.js"></script>
     </div>
-    <!-- JS will populate #classes div with classes when Firestore connects -->
-    <!--
-    <div id="classes" style="display: none">
-      <div>Calc<span onclick="cycleClasses(0);" oncontextmenu="resetClasses(0); return false;">X</span></div>
-      <div>English<span onclick="cycleClasses(1);" oncontextmenu="resetClasses(1); return false;">X</span></div>
-      <div>T. Theater<span onclick="cycleClasses(2);" oncontextmenu="resetClasses(2); return false;">X</span></div>
-      <div>APCSA<span onclick="cycleClasses(3);" oncontextmenu="resetClasses(3); return false;">X</span></div>
-      <div>APUSH<span onclick="cycleClasses(4);" oncontextmenu="resetClasses(4); return false;">X</span></div>
-      <div>Chemistry<span onclick="cycleClasses(5);" oncontextmenu="resetClasses(5); return false;">X</span></div>
-      <div>.<span onclick="cycleClasses(6);" oncontextmenu="resetClasses(6); return false;">X</span></div>
-      <div>.<span onclick="cycleClasses(7);" oncontextmenu="resetClasses(7); return false;">X</span></div>
-      <div>Kwlg Bowl<span onclick="cycleClasses(8);" oncontextmenu="resetClasses(8); return false;"> X</span></div>
-      <div>Sports<span onclick="cycleClasses(9);" oncontextmenu="resetClasses(9); return false;">X</span></div>
-    </div>
-    
-    <div class="blur-box" style="display: none">
-      <script type="module" src="./todo.js"></script>
-      <div class="input-wrapper">
-        <input id="todo-input" autocomplete="off" type="text" placeholder="What should you do..." onkeyup="addToTodo(event)">
-        <input type="checkbox" name="Important" id="todo-important">
-        <img onclick="updateTodo()" src="./assets/cloud.svg" alt="A blue cloud drawing with white arrows indicating refresh">
-      </div>
-      <div class="tags-wrapper">
-        <span class="tag">#tag</span>
-        <span class="tag">#another-tag</span>
-      </div>
-      <ul id="todo"></ul>
-    </div>
-  -->
   </div>
   <script type="module" src="./main.js"></script>
   <script type="module" src="./search.js"></script>
